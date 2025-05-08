@@ -12,8 +12,8 @@ while True:
     mainplayer.update(display)
     map.render(display)
     mainplayer.render(display,map.camera)
-    map.camera[0]+=(mainplayer.x-setings.SCREAN_WIDTH//setings.Scale//2-map.camera[0])/30
-    map.camera[1]+=(mainplayer.y-setings.SCREAN_HEIGHT//setings.Scale//2-map.camera[1])/30
+    map.camera[0]+=(mainplayer.x-setings.SCREAN_WIDTH//setings.Scale//2-map.camera[0])/15
+    map.camera[1]+=(mainplayer.y-setings.SCREAN_HEIGHT//setings.Scale//2-map.camera[1])/15
     for i in pygame.event.get():
             if i.type==pygame.QUIT:
                 exit(0)

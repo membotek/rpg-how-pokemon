@@ -1,5 +1,5 @@
 import pygame
-from scripts import util,map,setings
+from scripts import util,map,setings,animation
 class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
@@ -10,11 +10,19 @@ class Player:
         self.movedown=False
         self.spead=spead
         self.map=map
+        self.nowanim='down'
         self.path=util.loadimage('C:/Users/Makar/new_after_test_game/maps/map.png')
         self.playerphoto=util.loadimage('C:/Users/Makar/new_after_test_game/graphics/player/down/down_0.png',1,(255,255,255))
+        self.animations={
+            'right':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/right',5),
+            'left':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/left',5),
+            'down':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/down',5),
+            'up':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/up',5)
+        }
     def render(self,display,camera):
-        display.blit(self.playerphoto,(self.x-camera[0],self.y-camera[1]))
+        self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1])
     def update(self,display):
+        self.animations[self.nowanim].udate()
         spead=self.spead
         if (self.moveright or self.moveleft) and (self.movedown or self.moveup):
             spead/=1.41
