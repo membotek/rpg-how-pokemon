@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-from scripts import setings,player,map
+from scripts import setings,player,map,obj
 maindisplay=pygame.display.set_mode((setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
 display=pygame.Surface((setings.SCREAN_WIDTH//setings.Scale,setings.SCREAN_HEIGHT//setings.Scale))
 clock=pygame.time.Clock()
@@ -35,6 +35,10 @@ while True:
                     mainplayer.moveup=False
                 if i.key==pygame.K_s:
                     mainplayer.movedown=False
+            if i.type==pygame.MOUSEBUTTONDOWN:
+                if pygame.mouse.get_pressed()[0]==True:
+                    mainplayer.timeratack=15
+                    mainplayer.fight=True
     d=pygame.transform.scale(display,(setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
     maindisplay.blit(d,(0,0))
     pygame.display.update()

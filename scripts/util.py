@@ -37,3 +37,8 @@ def loadbordermapfromcsv(path):
                 border.add((nomberstr,nombersto))
     print(border)
     return(border)
+def loadnameimages(path,scale):
+    b={}
+    for i in os.listdir(path):
+        b[i[:-4]]=loadimage(path+'/'+i,scale)
+    return(b)
