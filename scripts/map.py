@@ -8,14 +8,11 @@ class Map:
         self.border=util.loadbordermapfromcsv('maps/border_Tile Layer 1_border.csv')
         self.objects=self.loadobjectsfromcssv('maps/border_Tile Layer 1_objects.csv',1)
 
-    def render(self,display):
+    def render(self,display,mainplayer):
         display.blit(self.path,(0-self.camera[0],0-self.camera[1]))
         for i in self.border:
             bb=pygame.Rect(i[1]*64,i[0]*64,64,64)
             # pygame.draw.rect(display,(255,0,0),(bb.x-self.camera[0],bb.y-self.camera[1],64,64))
-        for i in self.objects:
-            # self.objects[i].render(display,self.camera)
-            self.objects[i].update()
     def getcollidite(self,hb):
         lx=hb.left//64
         rx=hb.right//64+1
@@ -51,7 +48,7 @@ class Map:
                 nombersto+=1
                 g=int(g)
                 if g==3:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/03.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/02.png',scale)
                 if g==4:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/04.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/03.png',scale)
         return(objs)

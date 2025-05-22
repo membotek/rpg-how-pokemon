@@ -1,5 +1,5 @@
 import pygame
-from scripts import util,map,setings,animation
+from scripts import util,map,setings,animation,obj
 class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
@@ -69,6 +69,7 @@ class Player:
             if self.timeratack<=0:
                 self.nowanim=self.nowanim[5:]
                 self.fight=False
+
     def getboundbox(self):
         bh=pygame.Rect(self.x,self.y,64,64)
         return(bh)

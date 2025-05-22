@@ -10,8 +10,11 @@ while True:
     clock.tick(60)
     display.fill((0,0,0))
     mainplayer.update(display)
-    map.render(display)
+    map.render(display,mainplayer)
     mainplayer.render(display,map.camera)
+    for i in map.objects:
+        map.objects[i].render(display,map.camera,mainplayer)
+        map.objects[i].update()
     map.camera[0]+=(mainplayer.x-setings.SCREAN_WIDTH//setings.Scale//2-map.camera[0])/15
     map.camera[1]+=(mainplayer.y-setings.SCREAN_HEIGHT//setings.Scale//2-map.camera[1])/15
     for i in pygame.event.get():
