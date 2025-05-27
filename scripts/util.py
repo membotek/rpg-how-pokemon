@@ -35,8 +35,23 @@ def loadbordermapfromcsv(path):
             nombersto+=1
             if g=='395':
                 border.add((nomberstr,nombersto))
-    print(border)
     return(border)
+def loadenemyfromcsv(path):
+    nomberstr=-1
+    nombersto=-1
+    enemy=[]
+    f=open(path)
+    file=csv.reader(f,delimiter=',')
+    for i in file:
+        nomberstr+=1
+        nombersto=-1
+        for g in i:
+            nombersto+=1
+            if g=='391':
+                enemy.append((nomberstr,nombersto,'spirit'))
+            if g=='392':
+                enemy.append((nomberstr,nombersto,'raccoon'))
+    return(enemy)
 def loadnameimages(path,scale):
     b={}
     for i in os.listdir(path):

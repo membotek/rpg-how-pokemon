@@ -1,4 +1,5 @@
-from scripts import animation
+from scripts import animation,map,util
+import pygame
 class Enemy:
     def __init__(self,x,y,spead,map,name):
         self.x=x
@@ -17,3 +18,5 @@ class Enemy:
     def update(self):
         if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
             self.nowanim='idle'
+    def render(self,display,camera):
+        self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1])

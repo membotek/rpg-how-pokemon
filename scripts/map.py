@@ -7,12 +7,15 @@ class Map:
         self.camera=[0,0]
         self.border=util.loadbordermapfromcsv('maps/border_Tile Layer 1_border.csv')
         self.objects=self.loadobjectsfromcssv('maps/border_Tile Layer 1_objects.csv',1)
+        self.forest=util.loadimage('maps/forest.png',1,(0,0,0))
 
     def render(self,display,mainplayer):
         display.blit(self.path,(0-self.camera[0],0-self.camera[1]))
         for i in self.border:
             bb=pygame.Rect(i[1]*64,i[0]*64,64,64)
             # pygame.draw.rect(display,(255,0,0),(bb.x-self.camera[0],bb.y-self.camera[1],64,64))
+    def renderforest(self,display):
+        display.blit(self.forest,(0-self.camera[0],0-self.camera[1]))
     def getcollidite(self,hb):
         lx=hb.left//64
         rx=hb.right//64+1

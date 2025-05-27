@@ -8,7 +8,8 @@ class Object:
     def render(self,display,camera,mainplayer):
         bbdetect=pygame.Rect(mainplayer.x-64,mainplayer.y-64,64*3,64*3)
         if bbdetect.colliderect(self.get_boundbox()):
-            display.blit(self.image,(self.x-camera[0],self.y-camera[1]))
+            pass
+            # display.blit(self.image,(self.x-camera[0],self.y-camera[1]))
 
     def update(self):
         pass
