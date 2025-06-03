@@ -14,6 +14,7 @@ for i in enemescords:
     b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2])
     enemes.append(b)
 while True:
+    pygame.display.set_caption(str(len(enemes)))
     clock.tick(60)
     display.fill((0,0,0))
     mainplayer.update(display)
@@ -22,6 +23,7 @@ while True:
     map.renderforest(display)
     for i in enemes:
         i.render(display,map.camera)
+        i.update()
     for i in map.objects:
         map.objects[i].render(display,map.camera,mainplayer)
         map.objects[i].update()

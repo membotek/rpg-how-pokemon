@@ -48,9 +48,9 @@ def loadenemyfromcsv(path):
         for g in i:
             nombersto+=1
             if g=='391':
-                enemy.append((nomberstr,nombersto,'spirit'))
+                enemy.append((nombersto,nomberstr,'spirit'))
             if g=='392':
-                enemy.append((nomberstr,nombersto,'raccoon'))
+                enemy.append((nombersto,nomberstr,'raccoon'))
     return(enemy)
 def loadnameimages(path,scale):
     b={}
