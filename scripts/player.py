@@ -14,16 +14,16 @@ class Player:
         self.spead=spead
         self.map=map
         self.nowanim='down'
-        self.path=util.loadimage('C:/Users/Makar/new_after_test_game/maps/map.png')
-        self.playerphoto=util.loadimage('C:/Users/Makar/new_after_test_game/graphics/player/down/down_0.png',1,(255,255,255))
+        self.path=util.loadimage('maps\map.png')
+        self.playerphoto=util.loadimage('graphics/player/down/down_0.png',1,(255,255,255))
         self.listweapons={
             'axe':util.loadnameimages('graphics/weapons/axe',1)
         }
         self.animations={
-            'right':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/right',5),
-            'left':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/left',5),
-            'down':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/down',5),
-            'up':animation.Animation('C:/Users/Makar/rpg-how-pokemon/graphics/player/up',5),
+            'right':animation.Animation('graphics/player/right',5),
+            'left':animation.Animation('graphics/player/left',5),
+            'down':animation.Animation('graphics/player/down',5),
+            'up':animation.Animation('graphics/player/up',5),
             'idleright':animation.Animation('graphics/player/right_idle',5),
             'idleleft':animation.Animation('graphics/player/left_idle',5),
             'idledown':animation.Animation('graphics/player/down_idle',5),

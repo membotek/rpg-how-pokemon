@@ -48,13 +48,13 @@ class Map:
                 nombersto+=1
                 g=int(g)
                 if g==3:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/02.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'graphics/objects/02.png',scale)
                 if g==4:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/03.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'graphics/objects/03.png',scale)
                 if g==16:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/15.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'graphics/objects/15.png',scale)
                 if g==13:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/12.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'graphics/objects/12.png',scale)
                 if g==12:
-                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/11.png',scale)
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'graphics/objects/11.png',scale)
         return(objs)
