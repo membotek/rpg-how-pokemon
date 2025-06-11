@@ -57,3 +57,7 @@ def loadnameimages(path,scale):
     for i in os.listdir(path):
         b[i[:-4]]=loadimage(path+'/'+i,scale)
     return(b)
+def slise(path,size=64,nomber=(0,0),scale=1):
+    image=loadimage(path,scale)
+    subimage=image.subsurface([size*nomber[0]*scale,size*nomber[1]*scale,size*scale,size*scale])
+    return(subimage)

@@ -11,9 +11,6 @@ class Map:
 
     def render(self,display,mainplayer):
         display.blit(self.path,(0-self.camera[0],0-self.camera[1]))
-        for i in self.border:
-            bb=pygame.Rect(i[1]*64,i[0]*64,64,64)
-            # pygame.draw.rect(display,(255,0,0),(bb.x-self.camera[0],bb.y-self.camera[1],64,64))
     def renderforest(self,display):
         display.blit(self.forest,(0-self.camera[0],0-self.camera[1]))
     def getcollidite(self,hb):
@@ -54,4 +51,10 @@ class Map:
                     objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/02.png',scale)
                 if g==4:
                     objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/03.png',scale)
+                if g==16:
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/15.png',scale)
+                if g==13:
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/12.png',scale)
+                if g==12:
+                    objs[(nomberstr,nombersto)]=obj.Object(nombersto*64,nomberstr*64-64,'C:/Users/Makar/rpg-how-pokemon/graphics/objects/11.png',scale)
         return(objs)

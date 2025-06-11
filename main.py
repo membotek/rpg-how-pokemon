@@ -23,7 +23,7 @@ while True:
     map.renderforest(display)
     for i in enemes:
         i.render(display,map.camera)
-        i.update()
+        i.update(enemes)
     for i in map.objects:
         map.objects[i].render(display,map.camera,mainplayer)
         map.objects[i].update()

@@ -5,7 +5,7 @@ class Enemy:
     def __init__(self,x,y,spead,map,name):
         self.map=map
         self.playerphoto=util.loadimage('graphics/monsters/'+name+'/idle/0.png',1,(0,0,0))
-        self.stoptimer=120
+        self.stoptimer=20
         self.breaktime=0
         self.longto=0
         self.stop=[]
@@ -27,7 +27,7 @@ class Enemy:
             'idle':animation.Animation('graphics/monsters/'+name+'/idle',5),
             'atack':animation.Animation('graphics/monsters/'+name+'/attack',5),
         }
-    def update(self):
+    def update(self,objects):
         if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
             self.nowanim='idle'
         self.animations[self.nowanim].udate()
@@ -37,7 +37,7 @@ class Enemy:
             if self.breaktime<=0:
                 self.ai()
         else:
-            self.move()
+            self.move(objects)
 
     def render(self,display,camera):
         self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1])
@@ -76,13 +76,14 @@ class Enemy:
             self.movedown=False
             self.moveright=False
             self.moveleft=True
-        elif direction==5:
+        elif direction==6:
             self.moveup=False
             self.movedown=False
             self.moveright=False
             self.moveleft=False
+            self.nowanim='move'
             self.breaktime=self.longto*15
-    def move(self):
+    def move(self,objects):
         spead=self.spead
         if (self.moveright or self.moveleft) and (self.movedown or self.moveup):
             spead/=1.41
@@ -91,24 +92,25 @@ class Enemy:
         if self.y<=0:
             self.y=0
         if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
-            b=self.getboundbox().center
+            b=self.getboundbox().topleft
             self.x=b[0]//64*64
             self.y=b[1]//64*64
             if self.nowanim in ('right','left','up','down'):
                 self.nowanim='idle'+self.nowanim
-        self.movey(self.spead)
-        self.movex(self.spead)
+        self.movey(self.spead,objects)
+        self.movex(self.spead,objects)
         if self.moveright==True or self.moveleft==True or self.moveup==True or self.movedown==True:
             self.stoptimer-=1
             self.stop.append((self.x,self.y))
             if self.stoptimer<=0:
-                self.stoptimer=120
+                self.stoptimer=20
                 if self.stop[-3]==self.stop[-2]==self.stop[-1]:
                     self.ai()
+                    self.stop=[]
     def getboundbox(self):
         bh=pygame.Rect(self.x,self.y,self.animations[self.nowanim].images[0].get_width(),self.animations[self.nowanim].images[0].get_height())
         return(bh)
-    def movex(self,spead):
+    def movex(self,spead,objekts):
         n=[]
         if self.moveright:
             self.nowanim='move'
@@ -116,13 +118,27 @@ class Enemy:
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.x=i.left-self.playerphoto.get_width()
+            for i in objekts:
+                if i==self:
+                    continue
+                a=i.getboundbox()
+                b=self.getboundbox()
+                if b.colliderect(a):
+                    self.x=a.left-self.playerphoto.get_width()
         if self.moveleft:
             self.nowanim='move'
             self.x-=spead
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.x=i.right
-    def movey(self,spead):
+            for i in objekts:
+                if i==self:
+                    continue
+                a=i.getboundbox()
+                b=self.getboundbox()
+                if b.colliderect(a):
+                    self.x=a.right
+    def movey(self,spead,objekts):
         n=[]
         if self.moveup:
             self.nowanim='move'
@@ -130,9 +146,23 @@ class Enemy:
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.y=i.bottom
+            for i in objekts:
+                if i==self:
+                    continue
+                a=i.getboundbox()
+                b=self.getboundbox()
+                if b.colliderect(a):
+                    self.y=a.bottom
         if self.movedown:
             self.nowanim='move'
             self.y+=spead
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.y=i.top-self.playerphoto.get_height()
+            for i in objekts:
+                if i==self:
+                    continue
+                a=i.getboundbox()
+                b=self.getboundbox()
+                if b.colliderect(a):
+                    self.y=a.top-self.playerphoto.get_height()
