@@ -1,5 +1,5 @@
 import pygame
-from scripts import util,map,setings,animation,obj
+from scripts import util,map,setings,animation,obj,details
 class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
@@ -12,7 +12,10 @@ class Player:
         self.nowweapons='axe'
         self.timeratack=0
         self.spead=spead
+        self.inventory={}
         self.map=map
+        self.bag=Bag(self.inventory)
+        self.secterboundbox=None
         self.nowanim='down'
         self.path=util.loadimage('maps\map.png')
         self.playerphoto=util.loadimage('graphics/player/down/down_0.png',1,(255,255,255))
@@ -35,7 +38,7 @@ class Player:
         }
     def render(self,display,camera):
         if self.fight==True:
-            pass
+            self.atack
         self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1])
     def update(self,display):
         self.animations[self.nowanim].udate()
@@ -101,3 +104,58 @@ class Player:
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.y=i.top-self.playerphoto.get_height()
+    def atack(self):
+        if self.nowanim=='fightright':
+            x=64
+            y=0
+            self.secterboundbox=pygame.Rect(self.x+64,self.y-64,64,3*64)
+        if self.nowanim=='fightleft':
+            x=-64
+            y=0
+            self.secterboundbox=pygame.Rect(self.x-64,self.y-64,64,3*64)
+        if self.nowanim=='fightup':
+            x=0
+            y=-64
+            self.secterboundbox=pygame.Rect(self.x-64,self.y-64,64*3,64)
+        if self.nowanim=='fightdown':
+            x=0
+            y=64
+            self.secterboundbox=pygame.Rect(self.x-64,self.y+64,64*3,64)
+        return(self.x,self.y,x,y,)
+class Bag:
+    def __init__(self,inventory):
+        self.x=100
+        self.y=100
+        self.w=setings.SCREAN_WIDTH-setings.SCREAN_WIDTH/1.3
+        self.h=setings.SCREAN_HEIGHT-setings.SCREAN_HEIGHT/1.3
+        self.inventory=inventory
+        self.ficsation=[]
+    def render(self,display):
+        pygame.draw.rect(display,(4,4,4),(self.x,self.y,self.w,self.h))
+    def update(self):
+        bb=pygame.Rect(self.x,self.y,self.w,20)
+        mxy=pygame.mouse.get_pos()
+        mxy=list(mxy)
+        mxy[0]//=setings.Scale
+        mxy[1]//=setings.Scale
+        if pygame.mouse.get_pressed()[0]:
+            if bb.collidepoint(mxy) or self.move==True:
+                self.move=True
+                if len(self.ficsation)<3:
+                    self.ficsation.append(self.x-mxy[0])
+                    self.ficsation.append(self.y-mxy[1])
+                self.x=mxy[0]+self.ficsation[0]
+                self.y=mxy[1]+self.ficsation[1]
+        else:
+            self.move=False
+            self.ficsation=[]
+    def saveinventory(self,obj):
+        if obj in self.inventory:
+            self.inventory[obj]+=1
+        else:
+            self.inventory[obj]=1
+    def show_inventory(self,display):
+        font=pygame.font.Font(None,50)
+        for n,i in enumerate(self.inventory):
+            img=font.render(f"{i} x{self.inventory[i]}",True,(255,255,255))
+            display.blit(img,(self.x+25,self.y+25+(n*60)))
