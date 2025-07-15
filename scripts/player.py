@@ -17,7 +17,7 @@ class Player:
         self.bag=Bag(self.inventory)
         self.secterboundbox=None
         self.nowanim='down'
-        self.path=util.loadimage('maps\map.png')
+        self.path=util.loadimage('maps/map.png')
         self.playerphoto=util.loadimage('graphics/player/down/down_0.png',1,(255,255,255))
         self.listweapons={
             'axe':util.loadnameimages('graphics/weapons/axe',1)

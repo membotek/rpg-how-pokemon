@@ -12,6 +12,7 @@ class Button:
         self.hoverd=False
         self.image=util.loadimage(pathforimage,1)
         self.image=pygame.transform.scale(self.image,(self.size))
+        print(self.size,self.x,self.y)
     def update(self):
         xy=pygame.mouse.get_pos()
         if self.rect.collidepoint(xy):

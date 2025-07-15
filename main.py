@@ -1,19 +1,20 @@
 import pygame
 pygame.init()
-from scripts import setings,player,map,obj,util,details
+from scripts import setings,player,map,obj,util,details,batlmeny
 import enemy
 maindisplay=pygame.display.set_mode((setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT),pygame.FULLSCREEN)
 setings.SCREAN_WIDTH=maindisplay.get_width()
 setings.SCREAN_HEIGHT=maindisplay.get_height()
 display=pygame.Surface((setings.SCREAN_WIDTH//setings.Scale,setings.SCREAN_HEIGHT//setings.Scale))
 clock=pygame.time.Clock()
+batlmeny=batlmeny.Meny(0,setings.SCREAN_HEIGHT*1/3,setings.SCREAN_WIDTH//setings.Scale,setings.SCREAN_HEIGHT//setings.Scale/3,'Battle Menu')
 map=map.Map()
 inventory=False
 full=True
 mainplayer=player.Player(0,0,10,map)
 enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
 print(len(enemescords))
-enemes=[]
+enemes: list[enemy.Enemy]=[]
 popkorn=[]
 for i in enemescords:
     b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2])
@@ -83,6 +84,9 @@ while True:
                 if pygame.mouse.get_pressed()[0]==True:
                     mainplayer.timeratack=15
                     mainplayer.fight=True
+                    for i in enemes:
+                        if mainplayer.getboundbox().colliderect(i.getboundbox()):
+                            batlmeny.run(display,clock,maindisplay)
     if inventory==True:
         mainplayer.bag.render(display)
         mainplayer.bag.update()
