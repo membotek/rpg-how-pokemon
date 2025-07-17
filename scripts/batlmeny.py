@@ -10,13 +10,13 @@ class Meny:
         self.title = title
         self.stated = 'Attack'
         self.buttons = [
-            widget.Button(x, y, 50, 200, 'graphics/icons/shield.png', color=(0, 128, 0), hovercolor=(255, 0, 0)),
-            widget.Button(x, y + 200, 50, 200, 'graphics/icons/shield.png', color=(128, 0, 0), hovercolor=(255, 0, 0)),
-            widget.Button(x, y + 400, 50, 200, 'graphics/icons/shield.png', color=(0, 128, 128), hovercolor=(255, 255, 255))
+            widget.Button(x//3, y, 700//3, 200//3, 'attack', color=(0, 128, 0), hovercolor=(125, 125, 125)),
+            widget.Button(x//3, y + 200//3+5, 700//3, 200//3, 'items', color=(128, 0, 0), hovercolor=(125, 125, 125)),
+            widget.Button(x//3, y + 400//3+10, 700//3, 200//3, 'run away', color=(0, 128, 128), hovercolor=(125, 125, 125))
         ]
 
     def render(self, display):
-        pygame.draw.rect(display, (0, 0, 0), (self.x*0, self.y*0, self.width, self.height), 2)
+        pygame.draw.rect(display, (255, 255, 255), (self.x, self.y, self.width, self.height),)
         for button in self.buttons:
             button.render(display)
     def update(self):
@@ -26,7 +26,7 @@ class Meny:
         global full
         while True:
             clock.tick(60)
-            display.fill((255,0,0))
+            display.fill((0,0,0))
             self.update()
             self.render(display)
             for i in pygame.event.get():
