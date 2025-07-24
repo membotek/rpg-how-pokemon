@@ -14,6 +14,7 @@ class Player:
         self.spead=spead
         self.inventory={}
         self.map=map
+        self.coldown=30
         self.bag=Bag(self.inventory)
         self.secterboundbox=None
         self.nowanim='down'
@@ -43,6 +44,7 @@ class Player:
     def update(self,display):
         self.animations[self.nowanim].udate()
         spead=self.spead
+        self.coldown-=1
         if (self.moveright or self.moveleft) and (self.movedown or self.moveup):
             spead/=1.41
         if self.x>=self.path.get_width()-self.playerphoto.get_width():

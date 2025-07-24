@@ -16,6 +16,14 @@ class Enemy:
         self.y=y
         self.yd=y
         self.oxiomay=y
+        if name=='bamboo':
+            self.hp=75
+        if name=='raccoon':
+            self.hp=150
+        if name=='spirit':
+            self.hp=50
+        if name=='squid':
+            self.hp=100
         self.moveright=False
         self.moveleft=False
         self.moveup=False

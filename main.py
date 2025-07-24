@@ -82,11 +82,17 @@ while True:
                     mainplayer.movedown=False
             if i.type==pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[0]==True:
-                    mainplayer.timeratack=15
-                    mainplayer.fight=True
-                    for i in enemes:
-                        if mainplayer.getboundbox().colliderect(i.getboundbox()):
-                            batlmeny.run(display,clock,maindisplay)
+                    if mainplayer.coldown<=0:
+                        mainplayer.timeratack=15
+                        mainplayer.fight=True
+                        mainplayer.coldown=30
+                        for i in enemes:
+                            if mainplayer.getboundbox().colliderect(i.getboundbox()):
+                                mainplayer.moveright=False
+                                mainplayer.moveleft=False
+                                mainplayer.moveup=False
+                                mainplayer.movedown=False
+                                batlmeny.run(display,clock,maindisplay,i)
     if inventory==True:
         mainplayer.bag.render(display)
         mainplayer.bag.update()
