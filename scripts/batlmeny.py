@@ -1,7 +1,7 @@
 import pygame
 from scripts import widget,util,setings
 full=True
-class Meny:
+class BaseMenu:
     def __init__(self, x, y, width, height, title):
         self.x = x
         self.y = y
@@ -9,6 +9,16 @@ class Meny:
         self.width = width
         self.height = height
         self.title = title
+    def render(self, display):
+        pygame.draw.rect(display, (255, 255, 255), (self.x, self.y, self.width, self.height),)
+        for button in self.buttons:
+            button.render(display)
+    def update(self):
+        for button in self.buttons:
+            button.update()
+class Meny(BaseMenu):
+    def __init__(self, x, y, width, height, title):
+        super().__init__(x,y,width,height,title)
         self.retturn=False
         self.stated = 'Attack'
         self.buttons = [
@@ -19,17 +29,12 @@ class Meny:
         self.active=None
 
     def render(self, display):
-        pygame.draw.rect(display, (255, 255, 255), (self.x, self.y, self.width, self.height),)
-        for button in self.buttons:
-            button.render(display)
+        super().render(display)
         self.renderctent(display)
-       
     def renderctent(self, display):
-        self.enemy.animations[self.enemy.nowanim].render(display,0,0)
-        # self.enemy.animations[self.enemy.nowanim].render(display,setings.SCREAN_WIDTH-self.enemy.playerphoto.get_width()*1.5,20)
-    def update(self):
-        for button in self.buttons:
-            button.update()
+        # self.enemy.animations[self.enemy.nowanim].render(display,0,0)
+        display.blit(self.enemy.batlimg,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
+    
     def run(self,display,clock,maindisplay,enemy):
         global full
         self.retturn=False

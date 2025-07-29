@@ -51,6 +51,8 @@ def loadenemyfromcsv(path):
                 enemy.append((nombersto,nomberstr,'spirit'))
             if g=='392':
                 enemy.append((nombersto,nomberstr,'raccoon'))
+            if g=='390':
+                enemy.append((nombersto,nomberstr,'bamboo'))
     return(enemy)
 def loadnameimages(path,scale):
     b={}

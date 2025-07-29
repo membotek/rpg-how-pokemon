@@ -63,8 +63,8 @@ while True:
                         setings.SCREAN_HEIGHT=maindisplay.get_height()
                         display=pygame.Surface((setings.SCREAN_WIDTH//setings.Scale,setings.SCREAN_HEIGHT//setings.Scale))
                     if full==False:
-                        setings.SCREAN_WIDTH=maindisplay.get_width()-30
-                        setings.SCREAN_HEIGHT=maindisplay.get_height()-30
+                        setings.SCREAN_WIDTH=maindisplay.get_width()*0.5
+                        setings.SCREAN_HEIGHT=maindisplay.get_height()*0.5
                         maindisplay=pygame.display.set_mode((setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
                         setings.SCREAN_WIDTH=maindisplay.get_width()
                         setings.SCREAN_HEIGHT=maindisplay.get_height()
