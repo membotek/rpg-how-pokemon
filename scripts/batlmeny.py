@@ -1,5 +1,5 @@
 import pygame
-from scripts import widget,util,setings
+from scripts import widget,util,setings,weapon
 full=True
 class BaseMenu:
     def __init__(self, x, y, width, height, title):
@@ -27,14 +27,22 @@ class Meny(BaseMenu):
             widget.Button(self,x//3, y + 400//3+10, 700//3, 200//3, 'run away', color=(0, 128, 128), hovercolor=(125, 125, 125))
         ]
         self.active=None
+        self.attackinermenu=AttackInnerMenu(700//3,y,700//3, 200//3,'lol')
 
     def render(self, display):
         super().render(display)
         self.renderctent(display)
+        if self.active==self.buttons[0]:
+            self.attackinermenu.render(display)
     def renderctent(self, display):
         # self.enemy.animations[self.enemy.nowanim].render(display,0,0)
         display.blit(self.enemy.batlimg,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
     
+    def update(self):
+        super().update()
+        if self.active==self.buttons[0]:
+            self.attackinermenu.update()
+
     def run(self,display,clock,maindisplay,enemy):
         global full
         self.retturn=False
@@ -72,11 +80,16 @@ class Meny(BaseMenu):
             d=pygame.transform.scale(display,(setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
             maindisplay.blit(d,(0,0))
             pygame.display.update()
-class AttackInnerMenu(Meny):
-   def __init__(self, x, y, width, height, title):
-        Meny.__init__(self,x,y,width,height,title)
-        self.buttons = [
-            widget.Button(self,x//3, y, 700//3, 200//3, 'attack', color=(0, 128, 0), hovercolor=(125, 125, 125)),
-            widget.Button(self,x//3, y + 200//3+5, 700//3, 200//3, 'items', color=(128, 0, 0), hovercolor=(125, 125, 125)),
-            widget.Button(self,x//3, y + 400//3+10, 700//3, 200//3, 'run away', color=(0, 128, 128), hovercolor=(125, 125, 125))
-        ]
+class AttackInnerMenu(BaseMenu):
+    def __init__(self, x, y, width, height, title):
+        self.active=None
+        BaseMenu.__init__(self,x,y,width,height,title)
+        self.buttons = []
+        for i in weapon.NOWHAVEMOVMENTS:
+            if i%2==1:
+                self.buttons.append(widget.Button(self,x, y+i//2*200//3, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
+            else:
+                self.buttons.append(widget.Button(self,x+700//3, y+(i-1)//2*200//3, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
+    def update(self):
+       self.buttons=self.buttons
+       super().update()
