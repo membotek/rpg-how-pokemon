@@ -1,6 +1,10 @@
 import pygame
 from scripts import widget,util,setings,weapon
 full=True
+def drawhp(maxhp,hp,cords,color,display):
+    pygame.draw.rect(display,(255,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//3,setings.SCREAN_HEIGHT//10))
+
+
 class BaseMenu:
     def __init__(self, x, y, width, height, title):
         self.x = x
@@ -37,16 +41,17 @@ class Meny(BaseMenu):
     def renderctent(self, display):
         # self.enemy.animations[self.enemy.nowanim].render(display,0,0)
         display.blit(self.enemy.batlimg,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
-    
+        display.blit(self.player.batlimg,(15,self.y-self.player.batlimg.get_height()))
     def update(self):
         super().update()
         if self.active==self.buttons[0]:
             self.attackinermenu.update()
 
-    def run(self,display,clock,maindisplay,enemy):
+    def run(self,display,clock,maindisplay,enemy,player):
         global full
         self.retturn=False
         self.enemy=enemy
+        self.player=player
         while True:
             if self.retturn==True:
                 return
@@ -87,9 +92,9 @@ class AttackInnerMenu(BaseMenu):
         self.buttons = []
         for i in weapon.NOWHAVEMOVMENTS:
             if i%2==1:
-                self.buttons.append(widget.Button(self,x, y+i//2*200//3, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
+                self.buttons.append(widget.Button(self,x+10, y+i//2*200//3+5*i//2, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
             else:
-                self.buttons.append(widget.Button(self,x+700//3, y+(i-1)//2*200//3, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
+                self.buttons.append(widget.Button(self,x+700//3+30, y+(i-1)//2*200//3+5*(i-1)//2, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
     def update(self):
        self.buttons=self.buttons
        super().update()

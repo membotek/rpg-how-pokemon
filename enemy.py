@@ -17,20 +17,24 @@ class Enemy:
         self.yd=y
         self.oxiomay=y
         if name=='bamboo':
-            self.hp=75
+            self.maxhp=75
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.batly=50
+            self.hp=self.maxhp
         if name=='raccoon':
-            self.hp=150
+            self.maxhp=150
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*1.5,self.playerphoto.get_height()*1.5))
             self.batly=20
+            self.hp=self.maxhp
         if name=='spirit':
-            self.hp=50
+            self.maxhp=50
             self.batly=50
+            self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
         if name=='squid':
-            self.hp=100
+            self.maxhp=100
             self.batly=50
+            self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
         self.moveright=False
         self.moveleft=False

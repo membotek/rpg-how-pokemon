@@ -45,6 +45,7 @@ class Button:
         elif self.hoverd==False:
             display.blit(self.image,(self.x,self.y))
         else:
+            pygame.draw.rect(display,self.hovercolor,(self.x,self.y,*self.size),100)
             display.blit(self.image,(self.x,self.y))
         if self.menu.active==self and self.inermenu!=None:
             self.inermenu.render(display)

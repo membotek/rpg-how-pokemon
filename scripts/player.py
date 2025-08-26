@@ -4,6 +4,9 @@ class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
         self.y=y
+        self.level=1
+        self.maxhp=35*(1.25*self.level)
+        self.hp=self.maxhp
         self.moveright=False
         self.moveleft=False
         self.moveup=False
@@ -14,6 +17,7 @@ class Player:
         self.spead=spead
         self.inventory={}
         self.map=map
+        self.batlimg=util.loadimage('graphics/player/up/up_0.png',2.5)
         self.coldown=30
         self.bag=Bag(self.inventory)
         self.secterboundbox=None

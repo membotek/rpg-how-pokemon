@@ -53,7 +53,8 @@ while True:
                     mainplayer.moveup=True
                 if i.key==pygame.K_s:
                     mainplayer.movedown=True
-                if i.key==pygame.K_F11:
+                # if i.key==pygame.K_F11:
+                if i.key==pygame.K_b:
                     full=not full
                     if full==True:
                         setings.SCREAN_WIDTH=maindisplay.get_width()
@@ -92,7 +93,7 @@ while True:
                                 mainplayer.moveleft=False
                                 mainplayer.moveup=False
                                 mainplayer.movedown=False
-                                batlmeny.run(display,clock,maindisplay,i)
+                                batlmeny.run(display,clock,maindisplay,i,mainplayer)
     if inventory==True:
         mainplayer.bag.render(display)
         mainplayer.bag.update()
