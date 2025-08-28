@@ -2,7 +2,8 @@ import pygame
 from scripts import widget,util,setings,weapon
 full=True
 def drawhp(maxhp,hp,cords,color,display):
-    pygame.draw.rect(display,(255,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//3,setings.SCREAN_HEIGHT//10))
+    pygame.draw.rect(display,(230,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//6,setings.SCREAN_HEIGHT//40))
+    pygame.draw.rect(display,(0,188,0),(cords[0],cords[1],(hp*setings.SCREAN_WIDTH//6)//maxhp,setings.SCREAN_HEIGHT//40))
 
 
 class BaseMenu:
@@ -59,6 +60,9 @@ class Meny(BaseMenu):
             display.fill((0,0,0))
             self.update()
             self.render(display)
+            enemy.hp=10
+            drawhp(player.maxhp,player.hp,(setings.SCREAN_WIDTH//2-setings.SCREAN_WIDTH//36,setings.SCREAN_HEIGHT*1/3//2-setings.SCREAN_HEIGHT//20),None,display)
+            drawhp(enemy.maxhp,enemy.hp,(0+setings.SCREAN_WIDTH//36,0+setings.SCREAN_HEIGHT//40),None,display)
             self.click=False
             for i in pygame.event.get():
                 if i.type==pygame.QUIT:
