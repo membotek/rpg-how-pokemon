@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-from scripts import setings,player,map,obj,util,details,batlmeny
+from scripts import setings,player,map,obj,util,details,batlmeny,weapon
 import enemy
 maindisplay=pygame.display.set_mode((setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT),pygame.FULLSCREEN)
 setings.SCREAN_WIDTH=maindisplay.get_width()
@@ -12,6 +12,7 @@ map=map.Map()
 inventory=False
 full=True
 mainplayer=player.Player(0,0,10,map)
+weapon.setupatack('axe',mainplayer.level,batlmeny)
 enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
 print(len(enemescords))
 enemes: list[enemy.Enemy]=[]

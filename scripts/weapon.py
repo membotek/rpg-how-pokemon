@@ -20,3 +20,13 @@ GLOBALHAVEMOVMENTS={
     'sai':[['hit',1],['block',1]],
     'sword':['hit','cutting attack','block'],
 }
+def setupatack(weapon,level,batlmany):
+    NOWHAVEMOVMENTS.clear()
+    q=1
+    for i in GLOBALHAVEMOVMENTS[weapon]:
+        if i[1]<=level:
+            NOWHAVEMOVMENTS[q]=i[0]
+            q+=1
+            if q==7:
+                return
+    batlmany.attackinermenu.refresh()

@@ -21,21 +21,25 @@ class Enemy:
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.batly=50
             self.hp=self.maxhp
+            self.sheald=2
         if name=='raccoon':
             self.maxhp=150
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*1.5,self.playerphoto.get_height()*1.5))
             self.batly=20
             self.hp=self.maxhp
+            self.sheald=4
         if name=='spirit':
             self.maxhp=50
             self.batly=50
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
+            self.sheald=1
         if name=='squid':
             self.maxhp=100
             self.batly=50
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
+            self.sheald=3
         self.moveright=False
         self.moveleft=False
         self.moveup=False

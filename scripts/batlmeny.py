@@ -1,9 +1,9 @@
 import pygame
-from scripts import widget,util,setings,weapon
+from scripts import widget,util,setings,weapon,fightbrain
 full=True
 def drawhp(maxhp,hp,cords,color,display):
-    pygame.draw.rect(display,(230,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//6,setings.SCREAN_HEIGHT//40))
-    pygame.draw.rect(display,(0,188,0),(cords[0],cords[1],(hp*setings.SCREAN_WIDTH//6)//maxhp,setings.SCREAN_HEIGHT//40))
+    pygame.draw.rect(display,(230,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//6,setings.SCREAN_HEIGHT//40),0,7)
+    pygame.draw.rect(display,(0,188,0),(cords[0],cords[1],(hp*setings.SCREAN_WIDTH//6)//maxhp,setings.SCREAN_HEIGHT//40),0,7)
 
 
 class BaseMenu:
@@ -33,6 +33,12 @@ class Meny(BaseMenu):
         ]
         self.active=None
         self.attackinermenu=AttackInnerMenu(700//3,y,700//3, 200//3,'lol')
+    def hendelattack(self,button):
+        damage=fightbrain.calcutedamage(self.weapon,button.text,None,self.enemy,self.player)
+        self.enemy.hp-=damage
+        if self.enemy.hp<0:
+            return
+        
 
     def render(self, display):
         super().render(display)
@@ -42,7 +48,7 @@ class Meny(BaseMenu):
     def renderctent(self, display):
         # self.enemy.animations[self.enemy.nowanim].render(display,0,0)
         display.blit(self.enemy.batlimg,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
-        display.blit(self.player.batlimg,(15,self.y-self.player.batlimg.get_height()))
+        display.blit(self.player.batlimg,(setings.SCREAN_WIDTH//4.6,self.y-self.player.batlimg.get_height()-30))
     def update(self):
         super().update()
         if self.active==self.buttons[0]:
@@ -60,8 +66,7 @@ class Meny(BaseMenu):
             display.fill((0,0,0))
             self.update()
             self.render(display)
-            enemy.hp=10
-            drawhp(player.maxhp,player.hp,(setings.SCREAN_WIDTH//2-setings.SCREAN_WIDTH//36,setings.SCREAN_HEIGHT*1/3//2-setings.SCREAN_HEIGHT//20),None,display)
+            drawhp(player.maxhp,player.hp,(setings.SCREAN_WIDTH//3-setings.SCREAN_WIDTH//36,setings.SCREAN_HEIGHT/3-setings.SCREAN_HEIGHT//18),None,display)
             drawhp(enemy.maxhp,enemy.hp,(0+setings.SCREAN_WIDTH//36,0+setings.SCREAN_HEIGHT//40),None,display)
             self.click=False
             for i in pygame.event.get():
@@ -90,15 +95,19 @@ class Meny(BaseMenu):
             maindisplay.blit(d,(0,0))
             pygame.display.update()
 class AttackInnerMenu(BaseMenu):
-    def __init__(self, x, y, width, height, title):
+    def __init__(self, x, y, width, height, title, weapon):
         self.active=None
         BaseMenu.__init__(self,x,y,width,height,title)
+        self.x=x
+        self.y=y
         self.buttons = []
-        for i in weapon.NOWHAVEMOVMENTS:
-            if i%2==1:
-                self.buttons.append(widget.Button(self,x+10, y+i//2*200//3+5*i//2, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
-            else:
-                self.buttons.append(widget.Button(self,x+700//3+30, y+(i-1)//2*200//3+5*(i-1)//2, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
+        self.weapon=weapon
     def update(self):
        self.buttons=self.buttons
        super().update()
+    def refresh(self):
+        for i in weapon.NOWHAVEMOVMENTS:
+            if i%2==1:
+                self.buttons.append(widget.Button(self,self.x+10, self.y+i//2*200//3+5*i//2, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
+            else:
+                self.buttons.append(widget.Button(self,self.x+700//3+30, self.y+(i-1)//2*200//3+5*(i-1)//2, 700//3, 200//3, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
