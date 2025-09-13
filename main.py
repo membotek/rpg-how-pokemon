@@ -1,11 +1,14 @@
 import pygame
-pygame.init()
 from scripts import setings,player,map,obj,util,details,batlmeny,weapon
 import enemy
+
+pygame.init()
+
 maindisplay=pygame.display.set_mode((setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT),pygame.FULLSCREEN)
 setings.SCREAN_WIDTH=maindisplay.get_width()
 setings.SCREAN_HEIGHT=maindisplay.get_height()
 display=pygame.Surface((setings.SCREAN_WIDTH//setings.Scale,setings.SCREAN_HEIGHT//setings.Scale))
+setings.surf = display
 clock=pygame.time.Clock()
 batlmeny=batlmeny.Meny(0,setings.SCREAN_HEIGHT*1/3,setings.SCREAN_WIDTH//setings.Scale,setings.SCREAN_HEIGHT//setings.Scale/3,'Battle Menu')
 map=map.Map()
@@ -17,10 +20,13 @@ enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
 print(len(enemescords))
 enemes: list[enemy.Enemy]=[]
 popkorn=[]
+
 for i in enemescords:
     b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2])
     enemes.append(b)
+
 detailslist=details.loaddetailsfromscv('maps/border_Tile Layer 1_details.csv',mainplayer)
+
 while True:
     pygame.display.set_caption(str(len(enemes)))
     clock.tick(60)

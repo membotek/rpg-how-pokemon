@@ -1,4 +1,5 @@
 from scripts import util
+
 class Animation:
     def __init__(self,path,fps,scale=1):
         self.images=util.loadimages(path,scale)

@@ -1,7 +1,15 @@
 import pygame
+from . import setings
 pygame.init()
 import os
 import csv
+
+font = pygame.font.Font(None, 50)
+
+def debug(msg: str):
+    surf = setings.surf
+    surf.blit(font.render(msg, True, "white"), (20, 100))
+
 
 # load image and scale(yvelich)
 

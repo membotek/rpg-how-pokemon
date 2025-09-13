@@ -4,6 +4,8 @@ import os
 import csv
 import math
 import random
+
+
 class Detail:
     def __init__(self,x,y,id,mainplayer):
         self.x=x
@@ -42,8 +44,10 @@ class Detail:
             self.clas='bone'
         if 15<=id<=15:
             self.clas='rock'
+    
     def render(self,display,camera):
         display.blit(self.image,(self.x-camera[0],self.y-camera[1]))
+
     def anigelastion(self,popkorn,detailslist):
         pop=[]
         if self.player.fight==True:
@@ -58,9 +62,11 @@ class Detail:
                 self.player.bag.saveinventory(self.clas)
                 if self in detailslist:
                     detailslist.remove(self)
+
     def get_boundbox(self):
         bbobj=pygame.Rect(self.x,self.y,self.image.get_width(),self.image.get_height())
         return(bbobj)
+    
 def loaddetailsfromscv(path,mainplayer):
     nomberstr=-1
     nombersto=-1
@@ -76,6 +82,7 @@ def loaddetailsfromscv(path,mainplayer):
                 lol=Detail(nombersto*64,nomberstr*64,int(g),mainplayer)
                 picturs.append(lol)
     return(picturs)
+
 class Partikal:
     def __init__(self,x,y,maincolor):
         self.x=x+32
@@ -86,8 +93,10 @@ class Partikal:
         self.angle=(random.random()-0.5)*2*math.pi
         self.vx=self.spead*math.cos(self.angle)
         self.vy=self.spead*math.sin(self.angle)
+
     def render(self,display,camera):
         pygame.draw.circle(display,self.color,(self.x-camera[0],self.y-camera[1]),5)
+        
     def update(self,popkorn):
         self.timer-=1
         self.x+=self.vx
