@@ -18,7 +18,7 @@ class Player:
         self.spead=spead
         self.inventory={}
         self.map=map
-        self.batlimg=util.loadimage('graphics/player/up/up_0.png',2.5)
+        self.batlimg=util.loadimage('graphics/player/up/up_0.png',2)
         self.coldown=30
         self.bag=Bag(self.inventory)
         self.secterboundbox=None
