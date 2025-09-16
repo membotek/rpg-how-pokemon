@@ -1,6 +1,7 @@
 from scripts import animation,map,util
 import random
 import pygame
+
 class Enemy:
     def __init__(self,x,y,spead,map,name):
         self.map=map

@@ -1,5 +1,6 @@
 import pygame
 from scripts import util,map,setings,animation,obj,details
+
 class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
@@ -17,7 +18,7 @@ class Player:
         self.spead=spead
         self.inventory={}
         self.map=map
-        self.batlimg=util.loadimage('graphics/player/up/up_0.png',2.5)
+        self.batlimg=util.loadimage('graphics/player/up/up_0.png',2)
         self.coldown=30
         self.bag=Bag(self.inventory)
         self.secterboundbox=None
@@ -45,6 +46,7 @@ class Player:
         if self.fight==True:
             self.atack
         self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1])
+
     def update(self,display):
         self.animations[self.nowanim].udate()
         spead=self.spead
@@ -82,6 +84,7 @@ class Player:
     def getboundbox(self):
         bh=pygame.Rect(self.x,self.y,64,64)
         return(bh)
+    
     def movex(self,spead):
         n=[]
         if self.moveright:
@@ -96,6 +99,7 @@ class Player:
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.x=i.right
+
     def movey(self,spead):
         n=[]
         if self.moveup:
@@ -110,6 +114,7 @@ class Player:
             boom=self.map.getcollideNotEffective(self.getboundbox())
             for i in boom:
                 self.y=i.top-self.playerphoto.get_height()
+
     def atack(self):
         if self.nowanim=='fightright':
             x=64
@@ -128,6 +133,7 @@ class Player:
             y=64
             self.secterboundbox=pygame.Rect(self.x-64,self.y+64,64*3,64)
         return(self.x,self.y,x,y,)
+    
 class Bag:
     def __init__(self,inventory):
         self.x=100
@@ -136,8 +142,10 @@ class Bag:
         self.h=setings.SCREAN_HEIGHT-setings.SCREAN_HEIGHT/1.3
         self.inventory=inventory
         self.ficsation=[]
+
     def render(self,display):
         pygame.draw.rect(display,(4,4,4),(self.x,self.y,self.w,self.h))
+
     def update(self):
         bb=pygame.Rect(self.x,self.y,self.w,20)
         mxy=pygame.mouse.get_pos()
@@ -155,11 +163,13 @@ class Bag:
         else:
             self.move=False
             self.ficsation=[]
+
     def saveinventory(self,obj):
         if obj in self.inventory:
             self.inventory[obj]+=1
         else:
             self.inventory[obj]=1
+            
     def show_inventory(self,display):
         font=pygame.font.Font(None,50)
         for n,i in enumerate(self.inventory):
