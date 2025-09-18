@@ -8,7 +8,7 @@ class Animation:
         self.ofps=self.fps
         # old
         
-    def render(self,display,x,y):
+    def render(self,display,x,y,undead=True):
         display.blit(self.images[self.nomber],(x,y))
 
     def udate(self):

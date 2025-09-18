@@ -5,6 +5,8 @@ import pygame
 class Enemy:
     def __init__(self,x,y,spead,map,name):
         self.map=map
+        self.timer=120
+        self.undead=True
         self.playerphoto=util.loadimage('graphics/monsters/'+name+'/idle/0.png',1,(0,0,0))
         self.stoptimer=20
         self.breaktime=0
@@ -18,29 +20,45 @@ class Enemy:
         self.yd=y
         self.oxiomay=y
         if name=='bamboo':
+            self.damages=20
             self.maxhp=75
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.batly=50
             self.hp=self.maxhp
             self.sheald=2
+            self.attacks=[['hit',1,1],['block',1,0],['grow',4,0]
+            ] # grow=upgrade sheald,   
+
         if name=='raccoon':
+            self.damages=40
             self.maxhp=150
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*1.5,self.playerphoto.get_height()*1.5))
             self.batly=20
             self.hp=self.maxhp
             self.sheald=4
+            self.attacks=[['hit',1,1],['block',1,0],['jump',4,2]
+            ]
+            
         if name=='spirit':
+            self.damages=30
             self.maxhp=50
             self.batly=50
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.sheald=1
+            self.attacks=[['hit',1,1],['block',1,0],['rebith of the phonex',4,0]
+            ] # rebith of the phonex= self.hp*1.5
+            
         if name=='squid':
+            self.damages=20
             self.maxhp=100
             self.batly=50
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.sheald=3
+            self.attacks=[['hit',1,1],['block',1,0],['splash'4,1]
+            ]
+            
         self.moveright=False
         self.moveleft=False
         self.moveup=False
@@ -51,6 +69,7 @@ class Enemy:
             'move':animation.Animation('graphics/monsters/'+name+'/move',5),
             'idle':animation.Animation('graphics/monsters/'+name+'/idle',5),
             'atack':animation.Animation('graphics/monsters/'+name+'/attack',5),
+            'dead':animation.Animation('graphics/monsters/'+name+'/deadmove',5)
         }
     def update(self,objects):
         if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
@@ -60,12 +79,21 @@ class Enemy:
         if self.x==self.xd and self.y==self.yd:
             self.nowanim='move'
             if self.breaktime<=0:
-                self.ai()
+                if self.undead:
+                    self.ai()
         else:
             self.move(objects)
+        if self.hp<=0:
+            self.undead=False
+            self.nowanim='dead'
+            self.timer-=1
+            if self.timer<=0:
+                objects.remove(self)
+
+            
 
     def render(self,display,camera):
-        self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1])
+        self.animations[self.nowanim].render(display,self.x-camera[0],self.y-camera[1],self.undead)
     def ai(self):
         direction=random.randint(1,5)   # 1-top,2-right,3-down,4-left
         if direction==1:

@@ -47,8 +47,8 @@ class Meny(BaseMenu):
         damage=fightbrain.calcutedamage(self.weapon, button.text, None, self.enemy, self.player)
         self.enemy.hp-=damage
         if self.enemy.hp<0:
-            return
-
+            self.retturn=True
+            
     def render(self, display):
         super().render(display)
         self.renderctent(display)

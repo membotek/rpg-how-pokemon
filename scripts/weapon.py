@@ -15,7 +15,7 @@ NOWHAVEMOVMENTS={
 }
 
 GLOBALHAVEMOVMENTS={
-    'axe':[['hit',1,0.5],['crushing attack',1,2],['block',1,0]],     # weapon:['atackname,(open level)',cofincent]
+    'axe':[['hit',1,0.5],['crushing attack',2,2],['block',1,0]],     # weapon:['atackname,(open level)',cofincent]
     'lance':[['hit',1],['block',1]],
     'rapier':[['hit',1],['block',1]],
     'sai':[['hit',1],['block',1]],

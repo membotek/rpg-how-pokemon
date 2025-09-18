@@ -17,7 +17,6 @@ full=True
 mainplayer=player.Player(0,0,10,map)
 weapon.setupatack('axe',mainplayer.level,batlmeny)
 enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
-print(len(enemescords))
 enemes: list[enemy.Enemy]=[]
 popkorn=[]
 
