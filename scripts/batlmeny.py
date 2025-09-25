@@ -1,6 +1,9 @@
 import pygame
 from scripts import widget,util,setings,weapon,fightbrain
 full=True
+active=0         # 0=player 1=enemy
+lastattack=None
+ourtimer=60
 
 def drawhp(maxhp,hp,cords,color,display):
     pygame.draw.rect(display,(230,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//6,setings.SCREAN_HEIGHT//40),0,7)
@@ -44,10 +47,16 @@ class Meny(BaseMenu):
         self.attackinermenu = AttackInnerMenu(self, w, y, w, h,'lol', 'axe')
     
     def hendelattack(self,button: widget.Button):
-        damage=fightbrain.calcutedamage(self.weapon, button.text, None, self.enemy, self.player)
-        self.enemy.hp-=damage
-        if self.enemy.hp<0:
-            self.retturn=True
+        global active,lastattack,ourtimer
+        if active==0:
+            if ourtimer<=0:
+                ourtimer=60
+                damage=fightbrain.calcutedamage(self.weapon, button.text, self.enemy, self.player,lastattack)
+                lastattack=button.text
+                self.enemy.hp-=damage
+                active=1
+                if self.enemy.hp<0:
+                    self.retturn=True
             
     def render(self, display):
         super().render(display)
@@ -60,10 +69,22 @@ class Meny(BaseMenu):
         display.blit(self.enemy.batlimg,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
         display.blit(self.player.batlimg,(setings.SCREAN_WIDTH//4.6,self.y-self.player.batlimg.get_height()-30))
     
-    def update(self):
+    def update(self,player,enemy):
+        global active,lastattack,ourtimer
         super().update()
+        ourtimer-=1
         if self.active==self.buttons[0]:
             self.attackinermenu.update()
+        if active==1:
+            if ourtimer<=0:
+                ourtimer=60
+                bob=fightbrain.enemy_ai_attack(player,enemy,lastattack)
+                skebob=fightbrain.enemycalcutedamage(bob,lastattack,player,enemy)
+                lastattack=bob
+                active=0
+                self.player.hp-=skebob
+                if self.player.hp<0:
+                    self.retturn=True
 
     def run(self,display,clock,maindisplay,enemy,player):
         global full
@@ -76,7 +97,7 @@ class Meny(BaseMenu):
                 return
             clock.tick(60)
             display.fill((0,0,0))
-            self.update()
+            self.update(player,enemy)
             self.render(display)
             drawhp(player.maxhp,player.hp,(setings.SCREAN_WIDTH//3-setings.SCREAN_WIDTH//36,setings.SCREAN_HEIGHT/3-setings.SCREAN_HEIGHT//18),None,display)
             drawhp(enemy.maxhp,enemy.hp,(0+setings.SCREAN_WIDTH//36,0+setings.SCREAN_HEIGHT//40),None,display)

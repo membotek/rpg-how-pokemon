@@ -5,7 +5,7 @@ class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
         self.y=y
-        self.level=1
+        self.level=2
         self.maxhp=35*(1.25*self.level)
         self.hp=self.maxhp
         self.moveright=False
@@ -18,6 +18,8 @@ class Player:
         self.spead=spead
         self.inventory={}
         self.map=map
+        self.basesheald=2
+        self.sheald=2
         self.batlimg=util.loadimage('graphics/player/up/up_0.png',2)
         self.coldown=30
         self.bag=Bag(self.inventory)

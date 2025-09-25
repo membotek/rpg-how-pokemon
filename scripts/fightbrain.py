@@ -1,7 +1,7 @@
 import pygame
 from scripts import weapon
 import random
-def calcutedamage(weaponname,platackname,lastenatackname,enemy,player):  # attack to enemy
+def calcutedamage(weaponname,platackname,enemy,player,lastenatackname=None):  # attack to enemy
     damage=weapon.DAMAGES[weaponname]
     if lastenatackname=='block':
         damage*=0.5
@@ -24,12 +24,30 @@ def enemycalcutedamage(enatackname,lastplatackname,player,enemy):  # attavk to p
         damage*=0.5
     for i in enemy.attacks:
         if i[0]==enatackname:
+            damage*=i[2]
     a=random.randint(1,100)
     if a<=5:   # 5% crit
-        *=0.5
+        damage*=0.5
     elif 6<=a<=95:   # 90% normal
-        *=1
+        damage*=1
     elif a>=96:   # 5% lose
-        *=2
-    return ()
-    
+        damage*=2
+    damage/=player.sheald/2
+    damage*=player.level/4
+    return (damage)
+def checkattack(enatackname,enemy,player):
+    if enatackname == 'grow':
+        enemy.sheald+=1
+    if enatackname == 'rebith of the fire':
+        enemy.hp=min(int(enemy.hp*1.5),enemy.maxhp)
+def enemy_ai_attack(player,enemy,lastplatackname=None):
+    if lastplatackname=='block':
+        a=random.randint(1,100)
+        if a<=30:
+            conddidans=[at[0] for at in enemy.attacks if at[2]>0]
+            b=random.choice(conddidans)
+            return(b)
+        else:
+            conddidans=[at[0] for at in enemy.attacks if at[2]==0]
+            b=random.choice(conddidans)
+            return(b)

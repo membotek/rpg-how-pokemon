@@ -21,7 +21,7 @@ enemes: list[enemy.Enemy]=[]
 popkorn=[]
 
 for i in enemescords:
-    b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2])
+    b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2],mainplayer.level)
     enemes.append(b)
 
 detailslist=details.loaddetailsfromscv('maps/border_Tile Layer 1_details.csv',mainplayer)

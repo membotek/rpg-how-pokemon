@@ -3,7 +3,7 @@ import random
 import pygame
 
 class Enemy:
-    def __init__(self,x,y,spead,map,name):
+    def __init__(self,x,y,spead,map,name,level,cofintcenthp=1.5,cofincentdmg=2):
         self.map=map
         self.timer=120
         self.undead=True
@@ -20,8 +20,8 @@ class Enemy:
         self.yd=y
         self.oxiomay=y
         if name=='bamboo':
-            self.damages=20
-            self.maxhp=75
+            self.damages=10*level//cofincentdmg
+            self.maxhp=75*level//cofintcenthp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.batly=50
             self.hp=self.maxhp
@@ -30,8 +30,8 @@ class Enemy:
             ] # grow=upgrade sheald,   
 
         if name=='raccoon':
-            self.damages=40
-            self.maxhp=150
+            self.damages=20*level//cofincentdmg
+            self.maxhp=150*level//cofintcenthp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*1.5,self.playerphoto.get_height()*1.5))
             self.batly=20
             self.hp=self.maxhp
@@ -40,23 +40,23 @@ class Enemy:
             ]
             
         if name=='spirit':
-            self.damages=30
-            self.maxhp=50
+            self.damages=15*level//cofincentdmg
+            self.maxhp=50*level//cofintcenthp
             self.batly=50
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.sheald=1
             self.attacks=[['hit',1,1],['block',1,0],['rebith of the phonex',4,0]
-            ] # rebith of the phonex= self.hp*1.5
+            ] # rebith of the fire= self.hp*1.5
             
         if name=='squid':
-            self.damages=20
-            self.maxhp=100
+            self.damages=10*level//cofincentdmg
+            self.maxhp=100*level//cofintcenthp
             self.batly=50
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.sheald=3
-            self.attacks=[['hit',1,1],['block',1,0],['splash'4,1]
+            self.attacks=[['hit',1,1],['block',1,0],['splash',4,1]
             ]
             
         self.moveright=False
