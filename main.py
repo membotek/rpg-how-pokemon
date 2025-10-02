@@ -16,6 +16,7 @@ inventory=False
 full=True
 mainplayer=player.Player(0,0,10,map)
 weapon.setupatack('axe',mainplayer.level,batlmeny)
+mainplayer.return_energy()
 enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
 enemes: list[enemy.Enemy]=[]
 popkorn=[]
@@ -41,7 +42,7 @@ while True:
     map.renderforest(display)
     for i in enemes:
         i.render(display,map.camera)
-        i.update(enemes)
+        i.update(enemes,mainplayer)
     for i in map.objects:
         map.objects[i].render(display,map.camera,mainplayer)
         map.objects[i].update()

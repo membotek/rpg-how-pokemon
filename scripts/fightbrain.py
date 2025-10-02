@@ -20,7 +20,7 @@ def calcutedamage(weaponname,platackname,enemy,player,lastenatackname=None):  # 
     return (damage)
 def enemycalcutedamage(enatackname,lastplatackname,player,enemy):  # attavk to player
     damage=enemy.damages
-    if lastplatackname=='block':
+    if lastplatackname=='perfect block':
         damage*=0.5
     for i in enemy.attacks:
         if i[0]==enatackname:
@@ -40,14 +40,28 @@ def checkattack(enatackname,enemy,player):
         enemy.sheald+=1
     if enatackname == 'rebith of the fire':
         enemy.hp=min(int(enemy.hp*1.5),enemy.maxhp)
+    if enatackname=='anigalation':
+        enemy.hp=0 
 def enemy_ai_attack(player,enemy,lastplatackname=None):
-    if lastplatackname=='block':
+    if lastplatackname=='perfect block':
         a=random.randint(1,100)
         if a<=30:
-            conddidans=[at[0] for at in enemy.attacks if at[2]>0]
+            conddidans=[at[0] for at in enemy.attacks if at[2]==1]
+            b=random.choice(conddidans)
+            return(b)
+        elif 30<a<50:
+            conddidans=[at[0] for at in enemy.attacks if at[2]>=2]
             b=random.choice(conddidans)
             return(b)
         else:
             conddidans=[at[0] for at in enemy.attacks if at[2]==0]
+            b=random.choice(conddidans)
+            return(b)
+    elif enemy.hp<=enemy.maxhp//10:
+        a=random.randint(1,100)
+        if a<=30:
+            return('anigalation')
+        else:
+            conddidans=[at[0] for at in enemy.attacks if at[2]>0]
             b=random.choice(conddidans)
             return(b)

@@ -48,15 +48,17 @@ class Meny(BaseMenu):
     
     def hendelattack(self,button: widget.Button):
         global active,lastattack,ourtimer
-        if active==0:
-            if ourtimer<=0:
-                ourtimer=60
-                damage=fightbrain.calcutedamage(self.weapon, button.text, self.enemy, self.player,lastattack)
-                lastattack=button.text
-                self.enemy.hp-=damage
-                active=1
-                if self.enemy.hp<0:
-                    self.retturn=True
+        if self.player.energy[button.text]>0:
+            if active==0:
+                if ourtimer<=0:
+                    ourtimer=60
+                    damage=fightbrain.calcutedamage(self.weapon, button.text, self.enemy, self.player,lastattack)
+                    lastattack=button.text
+                    self.enemy.hp-=damage
+                    self.player.energy[button.text]-=1 
+                    active=1
+                    if self.enemy.hp<0:
+                        self.retturn=True
             
     def render(self, display):
         super().render(display)
@@ -73,6 +75,7 @@ class Meny(BaseMenu):
         global active,lastattack,ourtimer
         super().update()
         ourtimer-=1
+        self.player=player
         if self.active==self.buttons[0]:
             self.attackinermenu.update()
         if active==1:

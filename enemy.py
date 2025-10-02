@@ -1,4 +1,4 @@
-from scripts import animation,map,util
+from scripts import animation,map,util,setings
 import random
 import pygame
 
@@ -31,7 +31,7 @@ class Enemy:
 
         if name=='raccoon':
             self.damages=20*level//cofincentdmg
-            self.maxhp=150*level//cofintcenthp
+            self.maxhp=100*level//cofintcenthp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*1.5,self.playerphoto.get_height()*1.5))
             self.batly=20
             self.hp=self.maxhp
@@ -46,8 +46,10 @@ class Enemy:
             self.hp=self.maxhp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
             self.sheald=1
-            self.attacks=[['hit',1,1],['block',1,0],['rebith of the phonex',4,0]
-            ] # rebith of the fire= self.hp*1.5
+            self.attacks=[['hit',1,1,20],['block',1,0,20],['rebith of the phonex',4,0,5],['anigalation',6,3,1]
+            ] 
+            # rebith of the fire= self.hp*1.5
+            # anigalation = self.hp*0 but self.damages*3
             
         if name=='squid':
             self.damages=10*level//cofincentdmg
@@ -71,24 +73,25 @@ class Enemy:
             'atack':animation.Animation('graphics/monsters/'+name+'/attack',5),
             'dead':animation.Animation('graphics/monsters/'+name+'/deadmove',5)
         }
-    def update(self,objects):
-        if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
-            self.nowanim='idle'
-        self.animations[self.nowanim].udate()
-        self.breaktime-=1
-        if self.x==self.xd and self.y==self.yd:
-            self.nowanim='move'
-            if self.breaktime<=0:
-                if self.undead:
-                    self.ai()
-        else:
-            self.move(objects)
-        if self.hp<=0:
-            self.undead=False
-            self.nowanim='dead'
-            self.timer-=1
-            if self.timer<=0:
-                objects.remove(self)
+    def update(self,objects,player):
+        if abs(self.x-player.x)<=setings.SCREAN_WIDTH*1.5 and abs(self.y-player.y)<=setings.SCREAN_HEIGHT*1.5:
+            if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
+                self.nowanim='idle'
+            self.animations[self.nowanim].udate()
+            self.breaktime-=1
+            if self.x==self.xd and self.y==self.yd:
+                self.nowanim='move'
+                if self.breaktime<=0:
+                    if self.undead:
+                        self.ai()
+            else:
+                self.move(objects)
+            if self.hp<=0:
+                self.undead=False
+                self.nowanim='dead'
+                self.timer-=1
+                if self.timer<=0:
+                    objects.remove(self)
 
             
 
