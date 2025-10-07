@@ -12,12 +12,15 @@ class Button:
         self.hovercolor=hovercolor
         self.size=hight,width
         self.slot=None
+        self.slot2=None
         self.inermenu=None
         self.rect=pygame.Rect(self.x,self.y,*self.size)
         self.hoverd=False
         font=pygame.font.Font('graphics/font/SourceCodePro-SemiboldIt.otf',45)
         self.image=font.render(text,True,(0,0,0))
         self.image=pygame.transform.scale(self.image,(self.size))
+        self.orgtext=text
+        self.countclicks=0
 
     def update(self):
         xy=pygame.mouse.get_pos()
@@ -27,9 +30,14 @@ class Button:
         if self.rect.collidepoint(xy):
             self.hoverd=True
             if self.menu.click==True:
+                self.countclicks+=1
                 self.menu.active=self
-                if self.slot!=None:
+                if self.slot!=None and self.countclicks==1:
                     self.slot()
+                if self.slot2!=None and self.countclicks==2:
+                    self.slot2()
+                if self.countclicks>=2:
+                    self.countclicks=0
                 
                 if self.text=='run away':
                     a=random.randint(0,1)
@@ -39,6 +47,9 @@ class Button:
         
         else:
             self.hoverd=False
+            if self.menu.click==True:
+                self.countclicks=0
+                self.changetext(self.orgtext)
         if self.menu.active==self and self.inermenu!=None:
             self.inermenu.update()
 
@@ -53,3 +64,7 @@ class Button:
             display.blit(self.image,(self.x,self.y))
         if self.menu.active==self and self.inermenu!=None:
             self.inermenu.render(display)
+    def changetext(self,newtext):
+        font=pygame.font.Font('graphics/font/SourceCodePro-SemiboldIt.otf',45)
+        self.image=font.render(str(newtext),True,(0,0,0))
+        self.image=pygame.transform.scale(self.image,(self.size))

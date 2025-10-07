@@ -44,19 +44,22 @@ def checkattack(enatackname,enemy,player):
         enemy.hp=0 
 def enemy_ai_attack(player,enemy,lastplatackname=None):
     if lastplatackname=='perfect block':
-        a=random.randint(1,100)
-        if a<=30:
-            conddidans=[at[0] for at in enemy.attacks if at[2]==1]
-            b=random.choice(conddidans)
-            return(b)
-        elif 30<a<50:
-            conddidans=[at[0] for at in enemy.attacks if at[2]>=2]
-            b=random.choice(conddidans)
-            return(b)
-        else:
-            conddidans=[at[0] for at in enemy.attacks if at[2]==0]
-            b=random.choice(conddidans)
-            return(b)
+        while True:
+            a=random.randint(1,100)
+            if a<=30:
+                conddidans=[at[0] for at in enemy.attacks if at[2]==1]
+                b=random.choice(conddidans)
+                return(b)
+            elif 30<a<50:
+                conddidans=[at[0] for at in enemy.attacks if at[2]>=2]
+                if conddidans==[]:
+                    continue
+                b=random.choice(conddidans)
+                return(b)
+            else:
+                conddidans=[at[0] for at in enemy.attacks if at[2]==0]
+                b=random.choice(conddidans)
+                return(b)
     elif enemy.hp<=enemy.maxhp//10:
         a=random.randint(1,100)
         if a<=30:

@@ -19,7 +19,8 @@ class Enemy:
         self.y=y
         self.yd=y
         self.oxiomay=y
-        if name=='bamboo':
+        self.name=name
+        if self.name=='bamboo':
             self.damages=10*level//cofincentdmg
             self.maxhp=75*level//cofintcenthp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*2,self.playerphoto.get_height()*2))
@@ -29,7 +30,7 @@ class Enemy:
             self.attacks=[['hit',1,1],['block',1,0],['grow',4,0]
             ] # grow=upgrade sheald,   
 
-        if name=='raccoon':
+        if self.name=='raccoon':
             self.damages=20*level//cofincentdmg
             self.maxhp=100*level//cofintcenthp
             self.batlimg=pygame.transform.scale(self.playerphoto,(self.playerphoto.get_width()*1.5,self.playerphoto.get_height()*1.5))
@@ -39,7 +40,7 @@ class Enemy:
             self.attacks=[['hit',1,1],['block',1,0],['jump',4,2]
             ]
             
-        if name=='spirit':
+        if self.name=='spirit':
             self.damages=15*level//cofincentdmg
             self.maxhp=50*level//cofintcenthp
             self.batly=50
@@ -51,7 +52,7 @@ class Enemy:
             # rebith of the fire= self.hp*1.5
             # anigalation = self.hp*0 but self.damages*3
             
-        if name=='squid':
+        if self.name=='squid':
             self.damages=10*level//cofincentdmg
             self.maxhp=100*level//cofintcenthp
             self.batly=50
@@ -74,7 +75,7 @@ class Enemy:
             'dead':animation.Animation('graphics/monsters/'+name+'/deadmove',5)
         }
     def update(self,objects,player):
-        if abs(self.x-player.x)<=setings.SCREAN_WIDTH*1.5 and abs(self.y-player.y)<=setings.SCREAN_HEIGHT*1.5:
+        if abs(self.x-player.x)<=setings.SCREAN_WIDTH*1.3 and abs(self.y-player.y)<=setings.SCREAN_HEIGHT*1.3:
             if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
                 self.nowanim='idle'
             self.animations[self.nowanim].udate()

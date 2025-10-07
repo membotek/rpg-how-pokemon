@@ -1,10 +1,11 @@
 import pygame
+import time
 from scripts import widget,util,setings,weapon,fightbrain
 full=True
 active=0         # 0=player 1=enemy
 lastattack=None
-ourtimer=60
-
+ourtimer=95
+font=pygame.font.SysFont('Times New Roman',50)
 def drawhp(maxhp,hp,cords,color,display):
     pygame.draw.rect(display,(230,0,0),(cords[0],cords[1],setings.SCREAN_WIDTH//6,setings.SCREAN_HEIGHT//40),0,7)
     pygame.draw.rect(display,(0,188,0),(cords[0],cords[1],(hp*setings.SCREAN_WIDTH//6)//maxhp,setings.SCREAN_HEIGHT//40),0,7)
@@ -38,6 +39,7 @@ class Meny(BaseMenu):
         self.stated = 'Attack'
         w = setings.SCREAN_WIDTH / 7
         h = setings.SCREAN_HEIGHT / 20
+        self.inftext=None
         self.buttons = [
             widget.Button(self,x//3, y, w, h, 'attack', color=(0, 128, 0), hovercolor=(125, 125, 125)),
             widget.Button(self,x//3, y + h+5, w, h, 'items', color=(128, 0, 0), hovercolor=(125, 125, 125)),
@@ -48,17 +50,20 @@ class Meny(BaseMenu):
     
     def hendelattack(self,button: widget.Button):
         global active,lastattack,ourtimer
+        button.changetext(button.orgtext)
         if self.player.energy[button.text]>0:
             if active==0:
                 if ourtimer<=0:
-                    ourtimer=60
+                    ourtimer=95
                     damage=fightbrain.calcutedamage(self.weapon, button.text, self.enemy, self.player,lastattack)
                     lastattack=button.text
+                    active=1
                     self.enemy.hp-=damage
                     self.player.energy[button.text]-=1 
-                    active=1
                     if self.enemy.hp<0:
                         self.retturn=True
+
+                
             
     def render(self, display):
         super().render(display)
@@ -68,8 +73,14 @@ class Meny(BaseMenu):
    
     def renderctent(self, display):
         # self.enemy.animations[self.enemy.nowanim].render(display,0,0)
-        display.blit(self.enemy.batlimg,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
+        global active
+        image=self.visual(self.enemy.batlimg)
+        display.blit(image,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
         display.blit(self.player.batlimg,(setings.SCREAN_WIDTH//4.6,self.y-self.player.batlimg.get_height()-30))
+        self.TEXT()
+        j=font.render(self.inftext,True,(255,0,0))
+        display.blit(j,(setings.SCREAN_WIDTH*0,setings.SCREAN_HEIGHT*0))
+        
     
     def update(self,player,enemy):
         global active,lastattack,ourtimer
@@ -80,7 +91,7 @@ class Meny(BaseMenu):
             self.attackinermenu.update()
         if active==1:
             if ourtimer<=0:
-                ourtimer=60
+                ourtimer=95
                 bob=fightbrain.enemy_ai_attack(player,enemy,lastattack)
                 skebob=fightbrain.enemycalcutedamage(bob,lastattack,player,enemy)
                 lastattack=bob
@@ -133,6 +144,22 @@ class Meny(BaseMenu):
             d=pygame.transform.scale(display,(setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
             maindisplay.blit(d,(0,0))
             pygame.display.update()
+    def showenergy(self,btn):
+            if btn.text in self.player.energy:
+                btn.changetext(self.player.energy[btn.text])
+    def visual(self,image:pygame.Surface):
+        if lastattack=="grow":
+            newimage=pygame.transform.scale(image,(image.get_width()*1.5,image.get_height()*1.5))
+            return(newimage)
+        else:
+            return(image)
+    def TEXT(self):
+        if active==0:
+            name='player'
+        else:
+            name=self.enemy.name
+        self.inftext=f"{name} used {lastattack}"
+
 
 class AttackInnerMenu(BaseMenu):
 
@@ -157,4 +184,5 @@ class AttackInnerMenu(BaseMenu):
                 self.buttons.append(widget.Button(self,self.x + 10, self.y+i//2*h+5*i//2, w, h, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
             else:
                 self.buttons.append(widget.Button(self,self.x+ w + 30, self.y+(i-1)//2*h+5*(i-1)//2, w, h, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))
-            self.buttons[-1].slot = lambda btn=self.buttons[-1]: self.mainmenu.hendelattack(btn)
+            self.buttons[-1].slot2 = lambda btn=self.buttons[-1]: self.mainmenu.hendelattack(btn)
+            self.buttons[-1].slot = lambda btn=self.buttons[-1]: self.mainmenu.showenergy(btn)
