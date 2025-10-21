@@ -1,5 +1,5 @@
 import pygame
-from scripts import setings,player,map,obj,util,details,batlmeny,weapon
+from scripts import setings,player,map,obj,util,details,batlmeny,weapon,statue
 import enemy
 
 pygame.init()
@@ -20,12 +20,18 @@ mainplayer.return_energy()
 enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
 enemes: list[enemy.Enemy]=[]
 popkorn=[]
+E=None
 
 for i in enemescords:
     b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2],mainplayer.level)
     enemes.append(b)
 
 detailslist=details.loaddetailsfromscv('maps/border_Tile Layer 1_details.csv',mainplayer)
+statues=util.loadobjfromcsv('maps/border_Tile Layer 1_objects.csv')
+statueas=[]
+for i in statues:
+        statuea=statue.Statue(i[0]*64,i[1]*64)
+        statueas.append(statuea)
 
 while True:
     pygame.display.set_caption(str(len(enemes)))
@@ -40,6 +46,8 @@ while True:
         i.render(display,map.camera)
     mainplayer.render(display,map.camera)
     map.renderforest(display)
+    for i in statueas:
+        i.render(mainplayer,map.camera,display,E)
     for i in enemes:
         i.render(display,map.camera)
         i.update(enemes,mainplayer)
@@ -61,6 +69,8 @@ while True:
                 if i.key==pygame.K_s:
                     mainplayer.movedown=True
                 # if i.key==pygame.K_F11:
+                if i.key==pygame.K_e:
+                    E=True
                 if i.key==pygame.K_b:
                     full=not full
                     if full==True:
@@ -88,6 +98,8 @@ while True:
                     mainplayer.moveup=False
                 if i.key==pygame.K_s:
                     mainplayer.movedown=False
+                if i.key==pygame.K_e:
+                    E=False
             if i.type==pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed()[0]==True:
                     if mainplayer.coldown<=0:
@@ -108,6 +120,7 @@ while True:
     for i in popkorn:
         i.render(display,map.camera)
         i.update(popkorn)
+    
     d=pygame.transform.scale(display,(setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
     maindisplay.blit(d,(0,0))
     pygame.display.update()

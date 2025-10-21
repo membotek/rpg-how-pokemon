@@ -60,7 +60,7 @@ def enemy_ai_attack(player,enemy,lastplatackname=None):
                 conddidans=[at[0] for at in enemy.attacks if at[2]==0]
                 b=random.choice(conddidans)
                 return(b)
-    elif enemy.hp<=enemy.maxhp//10:
+    elif enemy.hp<=enemy.maxhp//100:
         a=random.randint(1,100)
         if a<=30:
             return('anigalation')
@@ -68,3 +68,26 @@ def enemy_ai_attack(player,enemy,lastplatackname=None):
             conddidans=[at[0] for at in enemy.attacks if at[2]>0]
             b=random.choice(conddidans)
             return(b)
+    else:
+        while True:
+            a=random.randint(1,100)
+            if a<=60:
+                conddidans=[at[0] for at in enemy.attacks if at[2]==1]
+                b=random.choice(conddidans)
+                return(b)
+            elif 60<a<89:
+                conddidans=[at[0] for at in enemy.attacks if at[2]==2]
+                if conddidans==[]:
+                    continue
+                b=random.choice(conddidans)
+                return(b)
+            elif 89<a<90:
+                conddidans=[at[0] for at in enemy.attacks if at[2]==3]
+                if conddidans==[]:
+                    continue
+                b=random.choice(conddidans)
+                return(b)
+            else:
+                conddidans=[at[0] for at in enemy.attacks if at[2]==0]
+                b=random.choice(conddidans)
+                return(b)

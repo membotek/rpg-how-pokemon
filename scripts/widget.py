@@ -1,6 +1,6 @@
 import pygame
 import random
-from scripts import util
+from scripts import util,batlmeny
 
 class Button:
     def __init__(self,menu,x,y,hight,width,text,color=(0,0,0),hovercolor=(255,255,255)):
@@ -40,9 +40,17 @@ class Button:
                     self.countclicks=0
                 
                 if self.text=='run away':
-                    a=random.randint(0,1)
-                    if a==0:
-                        self.menu.retturn=True
+                    a=random.randint(1,50)
+                    a*=(self.menu.player.level//4)
+                    if batlmeny.active==0:
+                        if 25<a:
+                            self.menu.retturn=True
+                            self.menu.inftext=None
+                            self.menu.active=0
+                            batlmeny.active=0
+                        else:
+                            batlmeny.active=1
+
 
         
         else:

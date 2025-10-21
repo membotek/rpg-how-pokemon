@@ -57,11 +57,15 @@ class Meny(BaseMenu):
                     ourtimer=95
                     damage=fightbrain.calcutedamage(self.weapon, button.text, self.enemy, self.player,lastattack)
                     lastattack=button.text
+                    self.TEXT()
                     active=1
                     self.enemy.hp-=damage
                     self.player.energy[button.text]-=1 
                     if self.enemy.hp<0:
                         self.retturn=True
+                        lastattack=None
+                        self.inftext=None
+                        self.active=0
 
                 
             
@@ -77,9 +81,13 @@ class Meny(BaseMenu):
         image=self.visual(self.enemy.batlimg)
         display.blit(image,(setings.SCREAN_WIDTH/2.5-self.enemy.batlimg.get_width()/2,self.enemy.batly))
         display.blit(self.player.batlimg,(setings.SCREAN_WIDTH//4.6,self.y-self.player.batlimg.get_height()-30))
-        self.TEXT()
-        j=font.render(self.inftext,True,(255,0,0))
-        display.blit(j,(setings.SCREAN_WIDTH*0,setings.SCREAN_HEIGHT*0))
+        if self.inftext!=None:
+            first=self.inftext.split()[0:2]
+            second=' '.join(self.inftext.split()[2:])
+            j=font.render(f"{first[0]} used",True,(255,0,0))
+            display.blit(j,(setings.SCREAN_WIDTH//2-j.get_width(),setings.SCREAN_HEIGHT//3))
+            j=font.render(second,True,(255,0,0))
+            display.blit(j,(setings.SCREAN_WIDTH//2-j.get_width(),setings.SCREAN_HEIGHT//3+j.get_height()))
         
     
     def update(self,player,enemy):
@@ -93,15 +101,18 @@ class Meny(BaseMenu):
             if ourtimer<=0:
                 ourtimer=95
                 bob=fightbrain.enemy_ai_attack(player,enemy,lastattack)
+                print(bob)
                 skebob=fightbrain.enemycalcutedamage(bob,lastattack,player,enemy)
-                lastattack=bob
+                if bob!=None:
+                    lastattack=bob
+                self.TEXT()
                 active=0
                 self.player.hp-=skebob
                 if self.player.hp<0:
                     self.retturn=True
 
     def run(self,display,clock,maindisplay,enemy,player):
-        global full
+        global full,lastattack
         self.retturn=False
         self.enemy=enemy
         self.player=player
@@ -140,6 +151,8 @@ class Meny(BaseMenu):
                 if i.type==pygame.MOUSEBUTTONDOWN:
                     self.click=True
                     self.attackinermenu.click = True
+            if self.enemy.undead==False:
+                lastattack=None
 
             d=pygame.transform.scale(display,(setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
             maindisplay.blit(d,(0,0))

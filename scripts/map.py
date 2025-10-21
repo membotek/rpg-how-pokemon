@@ -13,7 +13,7 @@ class Map:
         display.blit(self.path,(0-self.camera[0],0-self.camera[1]))
     def renderforest(self,display):
         display.blit(self.forest,(0-self.camera[0],0-self.camera[1]))
-    def getcollidite(self,hb):
+    def getcollide(self,hb):
         lx=hb.left//64
         rx=hb.right//64+1
         dy=hb.bottom//64+1

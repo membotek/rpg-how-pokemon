@@ -62,6 +62,20 @@ def loadenemyfromcsv(path):
             if g=='390':
                 enemy.append((nombersto,nomberstr,'bamboo'))
     return(enemy)
+def loadobjfromcsv(path):
+    nomberstr=-1
+    nombersto=-1
+    statues=[]
+    f=open(path)
+    file=csv.reader(f,delimiter=',')
+    for i in file:
+        nomberstr+=1
+        nombersto=-1
+        for g in i:
+            nombersto+=1
+            if g=='16':
+                statues.append((nombersto,nomberstr,''))
+    return(statues)
 def loadnameimages(path,scale):
     b={}
     for i in os.listdir(path):

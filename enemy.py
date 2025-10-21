@@ -172,7 +172,7 @@ class Enemy:
         if self.moveright:
             self.nowanim='move'
             self.x+=spead
-            boom=self.map.getcollideNotEffective(self.getboundbox())
+            boom=self.map.getcollideNotEffective(self.getboundbox()) # we need change getcollidenOTEFFECTIVE
             for i in boom:
                 self.x=i.left-self.playerphoto.get_width()
             for i in objekts:
