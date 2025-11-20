@@ -15,11 +15,8 @@ NOWHAVEMOVMENTS={
 }
 
 GLOBALHAVEMOVMENTS={
-    'axe':[['simple attack',1,0.5,20],['crushing attack',2,2,5],['perfect block',1,0,20]],     # weapon:['atackname,(open level),cofincent,max energy]
-    'lance':[['simple attack',1],['perfect block',1]],
-    'rapier':[['simple attack',1],['perfect block',1]],
-    'sai':[['simple attack',1],['perfect block',1]],
-    'sword':['simple attack','cutting attack','perfect block'],
+    'axe':[['simple attack',1,0.5,20],['crushing attack',2,2,5],['perfect block',1,0,20],['hail of blows',4,0.7,15],['fury slesh',5,1.2,15],['spit',7,1.1,10],['attack of leg',6,1.6,10]]  
+      # weapon:['atackname,(open level),cofincent,max energy]
 }
 
 def setupatack(weapon,level,batlmany):

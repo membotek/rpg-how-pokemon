@@ -1,11 +1,11 @@
-import pygame
+import pygame,math
 from scripts import util,map,setings,animation,obj,details,weapon
 
 class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
         self.y=y
-        self.level=6
+        self.level=4
         self.maxhp=35*(1.25*self.level)
         self.hp=self.maxhp
         self.moveright=False
@@ -22,6 +22,7 @@ class Player:
         self.sheald=2
         self.energy={}
         self.batlimg=util.loadimage('graphics/player/up/up_0.png',2)
+        self.statue_render=util.loadimage('graphics\player\down_idle\idle_down.png',2)
         self.coldown=30
         self.bag=Bag(self.inventory)
         self.secterboundbox=None
@@ -66,8 +67,8 @@ class Player:
             self.y=0
         if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
             b=self.getboundbox().center
-            self.x=b[0]//64*64
-            self.y=b[1]//64*64
+            self.x+=(b[0]//64*64-self.x)/10
+            self.y+=(b[1]//64*64-self.y)/10
             if self.nowanim in ('right','left','up','down'):
                 self.nowanim='idle'+self.nowanim
         self.movey(self.spead)

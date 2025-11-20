@@ -41,9 +41,9 @@ class Meny(BaseMenu):
         h = setings.SCREAN_HEIGHT / 20
         self.inftext=None
         self.buttons = [
-            widget.Button(self,x//3, y, w, h, 'attack', color=(0, 128, 0), hovercolor=(125, 125, 125)),
-            widget.Button(self,x//3, y + h+5, w, h, 'items', color=(128, 0, 0), hovercolor=(125, 125, 125)),
-            widget.Button(self,x//3, y + h * 2+10, w, h, 'run away', color=(0, 128, 128), hovercolor=(125, 125, 125))
+            widget.Button(self,x//3, y, w, h, 'attack', color=(255, 255, 255), hovercolor=(125, 125, 125)),
+            widget.Button(self,x//3, y + h+5, w, h, 'items', color=(255, 255, 255), hovercolor=(125, 125, 125)),
+            widget.Button(self,x//3, y + h * 2+10, w, h, 'run away', color=(255, 255, 255), hovercolor=(125, 125, 125))
         ]
         self.active=None
         self.attackinermenu = AttackInnerMenu(self, w, y, w, h,'lol', 'axe')

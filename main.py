@@ -3,7 +3,7 @@ from scripts import setings,player,map,obj,util,details,batlmeny,weapon,statue
 import enemy
 
 pygame.init()
-
+font=pygame.font.Font(None,50)
 maindisplay=pygame.display.set_mode((setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT),pygame.FULLSCREEN)
 setings.SCREAN_WIDTH=maindisplay.get_width()
 setings.SCREAN_HEIGHT=maindisplay.get_height()
@@ -21,6 +21,8 @@ enemescords=util.loadenemyfromcsv('maps/border_Tile Layer 1_enemy.csv')
 enemes: list[enemy.Enemy]=[]
 popkorn=[]
 E=None
+DEBAG=True
+statue.load_icons()
 
 for i in enemescords:
     b=enemy.Enemy(i[0]*64,i[1]*64,1,map,i[2],mainplayer.level)
@@ -48,6 +50,7 @@ while True:
     map.renderforest(display)
     for i in statueas:
         i.render(mainplayer,map.camera,display,E)
+    E=False
     for i in enemes:
         i.render(display,map.camera)
         i.update(enemes,mainplayer)
@@ -120,7 +123,16 @@ while True:
     for i in popkorn:
         i.render(display,map.camera)
         i.update(popkorn)
-    
+    if DEBAG==True:
+        xy=pygame.mouse.get_pos()
+        mx=int(xy[0]/setings.SCREAN_WIDTH*100)
+        my=int(xy[1]/setings.SCREAN_HEIGHT*100)
+        w=font.render(str(mx),1,(255,255,255))
+        h=font.render(str(my),1,(255,255,255))
+        display.blit(w,(0,0))
+        display.blit(h,(0,50))
+        
+
     d=pygame.transform.scale(display,(setings.SCREAN_WIDTH,setings.SCREAN_HEIGHT))
     maindisplay.blit(d,(0,0))
     pygame.display.update()

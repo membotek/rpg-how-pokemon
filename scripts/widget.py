@@ -3,7 +3,7 @@ import random
 from scripts import util,batlmeny
 
 class Button:
-    def __init__(self,menu,x,y,hight,width,text,color=(0,0,0),hovercolor=(255,255,255)):
+    def __init__(self,menu,x,y,hight,width,text,color=(0,0,0),hovercolor=(255,255,255),textcolour=(0,0,0),need=False):
         self.menu=menu
         self.text=text
         self.x=x
@@ -11,22 +11,25 @@ class Button:
         self.color=color
         self.hovercolor=hovercolor
         self.size=hight,width
+        self.textcolour=textcolour
         self.slot=None
         self.slot2=None
         self.inermenu=None
         self.rect=pygame.Rect(self.x,self.y,*self.size)
         self.hoverd=False
         font=pygame.font.Font('graphics/font/SourceCodePro-SemiboldIt.otf',45)
-        self.image=font.render(text,True,(0,0,0))
+        self.image=font.render(text,True,textcolour)
         self.image=pygame.transform.scale(self.image,(self.size))
         self.orgtext=text
         self.countclicks=0
+        self.need=need
 
     def update(self):
         xy=pygame.mouse.get_pos()
         xy=list(xy)
-        xy[0]//=2
-        xy[1]//=2
+        if self.need==False:
+            xy[0]//=2
+            xy[1]//=2
         if self.rect.collidepoint(xy):
             self.hoverd=True
             if self.menu.click==True:
@@ -66,13 +69,16 @@ class Button:
             pygame.draw.rect(display,self.hovercolor,(self.x,self.y,*self.size),100)
             display.blit(self.image,(self.x,self.y))
         elif self.hoverd==False:
+            pygame.draw.rect(display,self.color,(self.x,self.y,*self.size),100)
             display.blit(self.image,(self.x,self.y))
         else:
             pygame.draw.rect(display,self.hovercolor,(self.x,self.y,*self.size),100)
             display.blit(self.image,(self.x,self.y))
         if self.menu.active==self and self.inermenu!=None:
             self.inermenu.render(display)
+
+
     def changetext(self,newtext):
         font=pygame.font.Font('graphics/font/SourceCodePro-SemiboldIt.otf',45)
-        self.image=font.render(str(newtext),True,(0,0,0))
+        self.image=font.render(str(newtext),True,self.textcolour)
         self.image=pygame.transform.scale(self.image,(self.size))
