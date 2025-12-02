@@ -27,6 +27,5 @@ def setupatack(weapon,level,batlmany):
             NOWHAVEMOVMENTS[q]=i[0]
             q+=1
             if q==7:
-                return
-            
+                break
     batlmany.attackinermenu.refresh()

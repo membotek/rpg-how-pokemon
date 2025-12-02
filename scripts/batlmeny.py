@@ -41,9 +41,9 @@ class Meny(BaseMenu):
         h = setings.SCREAN_HEIGHT / 20
         self.inftext=None
         self.buttons = [
-            widget.Button(self,x//3, y, w, h, 'attack', color=(255, 255, 255), hovercolor=(125, 125, 125)),
-            widget.Button(self,x//3, y + h+5, w, h, 'items', color=(255, 255, 255), hovercolor=(125, 125, 125)),
-            widget.Button(self,x//3, y + h * 2+10, w, h, 'run away', color=(255, 255, 255), hovercolor=(125, 125, 125))
+            widget.Button(self,x//3, y, w, h, 'attack', color=(255, 255, 255),textcolour=(0,0,0), hovercolor=(125, 125, 125)),
+            widget.Button(self,x//3, y + h+5, w, h, 'items', color=(255, 255, 255),textcolour=(0,0,0), hovercolor=(125, 125, 125)),
+            widget.Button(self,x//3, y + h * 2+10, w, h, 'run away', color=(255, 255, 255),textcolour=(0,0,0), hovercolor=(125, 125, 125))
         ]
         self.active=None
         self.attackinermenu = AttackInnerMenu(self, w, y, w, h,'lol', 'axe')
@@ -192,6 +192,7 @@ class AttackInnerMenu(BaseMenu):
     def refresh(self):
         w = self.width / 2 
         h = setings.SCREAN_HEIGHT / 20
+        print(weapon.NOWHAVEMOVMENTS)
         for i in weapon.NOWHAVEMOVMENTS:
             if i%2==1:
                 self.buttons.append(widget.Button(self,self.x + 10, self.y+i//2*h+5*i//2, w, h, weapon.NOWHAVEMOVMENTS[i], color=(0, 128, 0), hovercolor=(125, 125, 125)))

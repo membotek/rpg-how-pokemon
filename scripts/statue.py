@@ -74,10 +74,28 @@ class Meny:
                         return()
                 if i.type==pygame.MOUSEBUTTONDOWN:
                     self.click=True
+                if i.type==pygame.MOUSEWHEEL:
+                    if self.gg[0].y<0:
+                        if i.y==1:
+                            for b in self.gg:
+                                b.y+=0.2*setings.SCREAN_HEIGHT
+                    if i.y==-1:
+                        for b in self.gg:
+                            b.y-=0.1*setings.SCREAN_HEIGHT
             if self.active and self.active2:
-                self.active.changetext(self.active2.name)
-                self.active2=False
-                self.active=False
+                    if self.active2.name not in weapon.NOWHAVEMOVMENTS.values():
+                        if self.active2.level<self.player.level:
+                            self.active.changetext(self.active2.name)
+                            self.active.orgtext=self.active2.name
+                            weapon.NOWHAVEMOVMENTS[self.wig.index(self.active)+1]=self.active2.name
+                            self.active2=False
+                            self.active=False
+                        else:
+                            self.active2=False
+                            self.active=False
+                    else:
+                        self.active2=False
+                        self.active=False
 class TEXT_OF_MOVEMENTS:
     def __init__(self,x,y,name,display,menu,player):
         self.x=x
@@ -92,7 +110,6 @@ class TEXT_OF_MOVEMENTS:
         for i in weapon.GLOBALHAVEMOVMENTS['axe']:
             if self.name==i[0]:
                 self.level=i[1]
-            print(self.name,i[0])
 
     def render(self):
         rect=self.display.blit(self.text,(self.x,self.y))

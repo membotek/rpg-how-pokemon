@@ -5,7 +5,7 @@ class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
         self.y=y
-        self.level=4
+        self.level=12
         self.maxhp=35*(1.25*self.level)
         self.hp=self.maxhp
         self.moveright=False
