@@ -1,0 +1,37 @@
+{
+    "start":{
+        "text":"what's up, how is it going?",
+        "choices":[
+            {"text":"All right","next":"work"},
+            {"text":"I am bad","next":"Ohh..."}
+        ]
+    },
+    "work":{
+        "text":"it's good, I have small work to you",
+        "choices":[
+            {"text":"what kind of work?","next":"Quest"},
+            {"text":"No thanks I am bussy","next":"End"}
+        ]
+    },
+    "Ohh...":{
+        "text":"I think the small work can help feel better!",
+        "choices":[
+            {"text":"Yeah, it's true!","next":"Quest","action":"full hp"}
+        ]
+    },
+    "Quest":{
+        "text":"go to Boby.",
+        "choices":[
+            {"text":"Ok","next":"End","action":"create quest","quest name":"travel to Boby","quest type":1,"quest goal":"Boby","quest from":"uncle lester","meta action":"After boby"}
+        ]
+    },
+    "After boby":{
+        "text":"tnx.",
+        "choices":[
+            {"text":"You are welcome","next":"End"}
+        ]
+    },
+    "Meta":{
+        "start":"start"
+    }
+}

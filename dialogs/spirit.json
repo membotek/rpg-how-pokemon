@@ -1,0 +1,21 @@
+{
+    "start":{
+        "text":"how are you?",
+        "choices":[
+            {"text":"I am okay","next":"Cool"},
+            {"text":"I am bad","next":"Ohh..."}
+        ]
+    },
+    "Cool":{
+        "text":"Cool,why are here",
+        "choices":[
+            {"text":"I don;t know","next":"End","reacte":"End"}
+        ]
+    },
+    "Ohh...":{
+        "text":"Ohhhh,Can I help you?",
+        "choices":[
+            {"text":"Yeah","next":"End","reacte":"End"}
+        ]
+    }
+}

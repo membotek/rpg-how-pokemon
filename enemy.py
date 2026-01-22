@@ -20,6 +20,7 @@ class Enemy:
         self.yd=y
         self.oxiomay=y
         self.name=name
+        self.indialog=False
         if self.name=='bamboo':
             self.damages=10*level//cofincentdmg
             self.maxhp=75*level//cofintcenthp
@@ -141,29 +142,30 @@ class Enemy:
             self.nowanim='move'
             self.breaktime=self.longto*15
     def move(self,objects):
-        spead=self.spead
-        if (self.moveright or self.moveleft) and (self.movedown or self.moveup):
-            spead/=1.41
-        if self.x<=0:
-            self.x=0
-        if self.y<=0:
-            self.y=0
-        if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
-            b=self.getboundbox().topleft
-            self.x=b[0]//64*64
-            self.y=b[1]//64*64
-            if self.nowanim in ('right','left','up','down'):
-                self.nowanim='idle'+self.nowanim
-        self.movey(self.spead,objects)
-        self.movex(self.spead,objects)
-        if self.moveright==True or self.moveleft==True or self.moveup==True or self.movedown==True:
-            self.stoptimer-=1
-            self.stop.append((self.x,self.y))
-            if self.stoptimer<=0:
-                self.stoptimer=20
-                if self.stop[-3]==self.stop[-2]==self.stop[-1]:
-                    self.ai()
-                    self.stop=[]
+        if self.indialog==False:
+            spead=self.spead
+            if (self.moveright or self.moveleft) and (self.movedown or self.moveup):
+                spead/=1.41
+            if self.x<=0:
+                self.x=0
+            if self.y<=0:
+                self.y=0
+            if self.moveright==False and self.moveleft==False and self.moveup==False and self.movedown==False:
+                b=self.getboundbox().topleft
+                self.x=b[0]//64*64
+                self.y=b[1]//64*64
+                if self.nowanim in ('right','left','up','down'):
+                    self.nowanim='idle'+self.nowanim
+            self.movey(self.spead,objects)
+            self.movex(self.spead,objects)
+            if self.moveright==True or self.moveleft==True or self.moveup==True or self.movedown==True:
+                self.stoptimer-=1
+                self.stop.append((self.x,self.y))
+                if self.stoptimer<=0:
+                    self.stoptimer=20
+                    if self.stop[-3]==self.stop[-2]==self.stop[-1]:
+                        self.ai()
+                        self.stop=[]
     def getboundbox(self):
         bh=pygame.Rect(self.x,self.y,self.animations[self.nowanim].images[0].get_width(),self.animations[self.nowanim].images[0].get_height())
         return(bh)
@@ -223,3 +225,16 @@ class Enemy:
                 b=self.getboundbox()
                 if b.colliderect(a):
                     self.y=a.top-self.playerphoto.get_height()
+class Lester(Enemy):
+    def ai(self):
+        None
+    def __init__(self, x, y, spead, map, level, cofintcenthp=1.5, cofincentdmg=2):
+        super().__init__(x, y, spead, map, 'spirit', level, cofintcenthp, cofincentdmg)
+        self.name='uncle lester'
+    def update(self,enemys,aaaa):
+        self.nowanim='idle'
+        self.animations[self.nowanim].udate()
+class NPC(Lester):
+    def __init__(self, x, y, spead, map, level, name, cofintcenthp=1.5, cofincentdmg=2):
+        super().__init__(x, y, spead, map, level, cofintcenthp, cofincentdmg)
+        self.name=name

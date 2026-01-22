@@ -5,7 +5,7 @@ class Player:
     def __init__(self,x,y,spead,map):
         self.x=x
         self.y=y
-        self.level=12
+        self.level=1
         self.maxhp=35*(1.25*self.level)
         self.hp=self.maxhp
         self.moveright=False
@@ -19,6 +19,21 @@ class Player:
         self.inventory={}
         self.map=map
         self.basesheald=2
+        self.level2xp={ 
+            1:0,
+            2:25,
+            3:125,
+            4:625,
+            5:1200,
+            6:2200,
+            7:3500,
+            8:6500,
+            9:9000,
+            10:13000,
+            11:17000,
+            12:19999
+        }
+        self.nowxp=self.level2xp[self.level]
         self.sheald=2
         self.energy={}
         self.batlimg=util.loadimage('graphics/player/up/up_0.png',2)
@@ -142,7 +157,10 @@ class Player:
         for i in weapon.GLOBALHAVEMOVMENTS[self.nowweapons]:
                 if i[0] in weapon.NOWHAVEMOVMENTS.values():
                     self.energy[i[0]]=i[3]
-    
+    def detect_eria(self):
+        a=self.getboundbox()
+        a=a.scale_by(1.5)
+        return(a)
 class Bag:
     def __init__(self,inventory):
         self.x=100

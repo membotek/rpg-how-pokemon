@@ -1,0 +1,11 @@
+{
+    "start":{
+        "text":"HI",
+        "choices":[
+            {"text":"Hi","next":"End","action":"finish quest","exp":18}
+        ]
+    },
+    "Meta":{
+        "start":"start"
+    }
+}
