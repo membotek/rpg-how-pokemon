@@ -1,43 +1,104 @@
 {
     "start": {
-        "text": "Ты слышал, как гремят барабаны? Война между народами spirit, bamboo, stone и river уже полыхает.",
+        "text": "Hey, traveler. You look like someone who listens before they swing a sword. The world is changing fast, and I need to tell you what is really happening.",
         "choices": [
-            {"text": "Расскажи подробнее", "next": "war_story"},
-            {"text": "Мне не до войны", "next": "decline"}
+            {"text": "I am listening, Lester.", "next": "who_are_you"},
+            {"text": "Make it quick, I have places to be.", "next": "short_warning"}
         ]
     },
-    "war_story": {
-        "text": "Я — Лестер. Когда spirit обвинили bamboo в краже священных ростков, союзники stone и river раскололись. Теперь на границе идут бои, и каждый народ шепчет о древнем артефакте, что может остановить бурю.",
+    "who_are_you": {
+        "text": "Name is Lester. Folks call me Uncle Lester because I have seen more seasons than most. I keep my eyes open and my words honest.",
         "choices": [
-            {"text": "Что мне сделать?", "next": "task"},
-            {"text": "Звучит опасно", "next": "decline"}
+            {"text": "What is happening in the world?", "next": "world_overview"},
+            {"text": "I just need work, not history.", "next": "short_warning"}
+        ]
+    },
+    "short_warning": {
+        "text": "Then hear this: a war is starting, and if you walk blind you will be crushed between nations.",
+        "choices": [
+            {"text": "Fine. Explain it properly.", "next": "world_overview"},
+            {"text": "I will take my chances.", "next": "End"}
+        ]
+    },
+    "world_overview": {
+        "text": "The peoples of spirit, bamboo, stone, and river have shared these lands for generations. Each kept their borders, honored their customs, and traded what the others lacked. That balance broke when a sacred bamboo grove was burned, and the spirit elders accused the bamboo clans of hiding the truth.",
+        "choices": [
+            {"text": "Why would bamboo hide anything?", "next": "bamboo_position"},
+            {"text": "Who benefits from this conflict?", "next": "hidden_hands"}
+        ]
+    },
+    "bamboo_position": {
+        "text": "The bamboo chiefs swear they are innocent. They say the grove was set ablaze by outsiders, meant to look like bamboo treachery. They are proud, but they are not fools. They know a war would break them.",
+        "choices": [
+            {"text": "What about the spirit people?", "next": "spirit_position"},
+            {"text": "Tell me about stone and river.", "next": "stone_river_position"}
+        ]
+    },
+    "spirit_position": {
+        "text": "The spirit people listen to the winds and read the ash. Their elders say the omen is clear: someone wants their faith to shatter. They are marching because they fear weakness more than blood.",
+        "choices": [
+            {"text": "Tell me about stone and river.", "next": "stone_river_position"},
+            {"text": "Who is pulling the strings?", "next": "hidden_hands"}
+        ]
+    },
+    "stone_river_position": {
+        "text": "Stone once stood between spirit and bamboo, a hard wall that stopped raids. River carried news and trade, binding everyone together. Now stone is split: half wants to defend spirit honor, half wants to shield bamboo. River councils argue day and night, and their indecision is strangling trade.",
+        "choices": [
+            {"text": "So who benefits?", "next": "hidden_hands"},
+            {"text": "Can this be stopped?", "next": "can_be_stopped"}
+        ]
+    },
+    "hidden_hands": {
+        "text": "There are rumors of a fifth force, smugglers and relic hunters. They whisper about an ancient pact stone, a relic that could force the nations to heed a single voice. If that relic is found by the wrong hands, the war will become a conquest.",
+        "choices": [
+            {"text": "What can I do?", "next": "task"},
+            {"text": "This sounds above my pay.", "next": "decline"}
+        ]
+    },
+    "can_be_stopped": {
+        "text": "Maybe. The old treaties were written in river ink and sealed with bamboo wax. If the leaders meet, they might remember those vows. But someone must carry words of peace across the frontlines.",
+        "choices": [
+            {"text": "I can carry a message.", "next": "task"},
+            {"text": "I do not trust words to stop blades.", "next": "decline"}
         ]
     },
     "task": {
-        "text": "Нужно доставить послание в лагерь bamboo и попросить перемирия. Я верю, что слова могут быть сильнее мечей.",
+        "text": "Then hear my request. Take this message to the bamboo camp and ask their chief to send a delegate to a council of peace. If they agree, I will try to draw spirit and river to the same table.",
         "choices": [
-            {"text": "Я доставлю послание", "next": "accept", "action": "create quest", "quest name": "peace for bamboo", "quest type": 1, "quest goal": "bamboo camp", "quest from": "uncle lester", "meta action": "After bamboo"},
-            {"text": "Я не готов", "next": "decline"}
+            {"text": "I will deliver your message.", "next": "accept", "action": "create quest", "quest name": "peace for bamboo", "quest type": 1, "quest goal": "bamboo camp", "quest from": "uncle lester", "meta action": "After bamboo"},
+            {"text": "I cannot risk it.", "next": "decline"}
         ]
     },
     "accept": {
-        "text": "Спасибо. Если bamboo услышат, spirit, stone и river смогут остановить кровопролитие.",
+        "text": "Good. Be careful, and do not speak of the relic. Keep the message sealed and your eyes open. The roads are full of spies now.",
         "choices": [
-            {"text": "Я сделаю всё, что смогу", "next": "End"}
+            {"text": "Understood. I will go.", "next": "End"}
         ]
     },
     "decline": {
-        "text": "Понимаю. Но помни: молчание тоже делает выбор.",
+        "text": "I will not shame you for refusing. But remember this: when the war reaches your door, you will wish you had moved sooner.",
         "choices": [
-            {"text": "Прощай", "next": "End"}
+            {"text": "Farewell, Lester.", "next": "End"}
         ]
     },
     "After bamboo": {
-        "text": "Ты вернулся? Тогда у нас есть шанс собрать совет народов и остановить войну.",
+        "text": "You are back. Tell me, did the bamboo chief listen? If they send a delegate, I will ride to the spirit elders and river councils tonight.",
         "choices": [
-            {"text": "Надеюсь, мы успеем", "next": "End"}
+            {"text": "They agreed to talk.", "next": "after_success"},
+            {"text": "They refused to meet.", "next": "after_failure"}
         ]
     },
+    "after_success": {
+        "text": "Then there is hope. Even stone will follow if they see unity. We might still save these lands from burning.",
+        "choices": [
+            {"text": "I hope so.", "next": "End"}
+        ]
+    },
+    "after_failure": {
+        "text": "Then we must try another path. If words failed, we may have to find the pact stone before the wrong hands do.",
+        "choices": [
+            {"text": "Let me know how I can help.", "next": "End"}
+
     "Meta": {
         "start": "start"
     }
