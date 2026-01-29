@@ -98,8 +98,7 @@
         "text": "Then we must try another path. If words failed, we may have to find the pact stone before the wrong hands do.",
         "choices": [
             {"text": "Let me know how I can help.", "next": "End"}
-        ]
-    },
+
     "Meta": {
         "start": "start"
     }
