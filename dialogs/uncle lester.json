@@ -1,37 +1,44 @@
 {
-    "start":{
-        "text":"what's up, how is it going?",
-        "choices":[
-            {"text":"All right","next":"work"},
-            {"text":"I am bad","next":"Ohh..."}
+    "start": {
+        "text": "Ты слышал, как гремят барабаны? Война между народами spirit, bamboo, stone и river уже полыхает.",
+        "choices": [
+            {"text": "Расскажи подробнее", "next": "war_story"},
+            {"text": "Мне не до войны", "next": "decline"}
         ]
     },
-    "work":{
-        "text":"it's good, I have small work to you",
-        "choices":[
-            {"text":"what kind of work?","next":"Quest"},
-            {"text":"No thanks I am bussy","next":"End"}
+    "war_story": {
+        "text": "Я — Лестер. Когда spirit обвинили bamboo в краже священных ростков, союзники stone и river раскололись. Теперь на границе идут бои, и каждый народ шепчет о древнем артефакте, что может остановить бурю.",
+        "choices": [
+            {"text": "Что мне сделать?", "next": "task"},
+            {"text": "Звучит опасно", "next": "decline"}
         ]
     },
-    "Ohh...":{
-        "text":"I think the small work can help feel better!",
-        "choices":[
-            {"text":"Yeah, it's true!","next":"Quest","action":"full hp"}
+    "task": {
+        "text": "Нужно доставить послание в лагерь bamboo и попросить перемирия. Я верю, что слова могут быть сильнее мечей.",
+        "choices": [
+            {"text": "Я доставлю послание", "next": "accept", "action": "create quest", "quest name": "peace for bamboo", "quest type": 1, "quest goal": "bamboo camp", "quest from": "uncle lester", "meta action": "After bamboo"},
+            {"text": "Я не готов", "next": "decline"}
         ]
     },
-    "Quest":{
-        "text":"go to Boby.",
-        "choices":[
-            {"text":"Ok","next":"End","action":"create quest","quest name":"travel to Boby","quest type":1,"quest goal":"Boby","quest from":"uncle lester","meta action":"After boby"}
+    "accept": {
+        "text": "Спасибо. Если bamboo услышат, spirit, stone и river смогут остановить кровопролитие.",
+        "choices": [
+            {"text": "Я сделаю всё, что смогу", "next": "End"}
         ]
     },
-    "After boby":{
-        "text":"tnx.",
-        "choices":[
-            {"text":"You are welcome","next":"End"}
+    "decline": {
+        "text": "Понимаю. Но помни: молчание тоже делает выбор.",
+        "choices": [
+            {"text": "Прощай", "next": "End"}
         ]
     },
-    "Meta":{
-        "start":"start"
+    "After bamboo": {
+        "text": "Ты вернулся? Тогда у нас есть шанс собрать совет народов и остановить войну.",
+        "choices": [
+            {"text": "Надеюсь, мы успеем", "next": "End"}
+        ]
+    },
+    "Meta": {
+        "start": "start"
     }
 }
